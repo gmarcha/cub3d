@@ -1,9 +1,9 @@
-#include "../cub3d.h"
+#include "cub3d.h"
 
 int					main(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
-	printf("%s\n", "Hello World!");
+	ft_putstr_fd("Hello World!\n", 1);
 	return (0);
 }
