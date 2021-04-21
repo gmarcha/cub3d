@@ -1,8 +1,8 @@
 NAME		= cub3d
 CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
-INC			= -I ./inc
-LIB			= -L ./libft -lft
+INC			= -I ./inc -I /usr/include/sys -I /usr/include/X11 -I /usr/include/X11/extensions
+LIB			= -L ./libft -lft -L ./minilibx -lmlx -L /usr/lib -lm -lX11 -lXext -lbsd
 OBJ			= $(patsubst src%, obj%, $(SRC:.c=.o))
 SRC			= src/cub3d.c
 
@@ -10,6 +10,7 @@ all:		$(NAME)
 
 $(NAME):	$(OBJ)
 			make -C libft
+			make -C minilibx
 			$(CC) $(FLAGS) -o $@ $^ $(LIB)
 
 obj/%.o:	src/%.c
@@ -23,6 +24,7 @@ run:		$(NAME)
 
 clean:
 			make $@ -C libft
+			make $@ -C minilibx
 			rm -rf $(OBJ)
 
 fclean:		clean
