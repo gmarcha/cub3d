@@ -4,7 +4,7 @@ int					main(void)
 {
 	void			*mlx;
 	void			*mlx_win;
-	//t_data			img;
+	t_data			img;
 
 	mlx = mlx_init();
 	if (mlx == 0)
