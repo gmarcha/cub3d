@@ -21,7 +21,7 @@ int					key_hook(int keycode, t_root *root)
 	if (keycode == 65307)
 	{
 		mlx_destroy_window(root->mlx, root->mlx_win);
-		return (0);
+		exit(0);
 	}
 	draw_square(root->mlx_img, 0x00000000);
 	if (keycode == 65361)
