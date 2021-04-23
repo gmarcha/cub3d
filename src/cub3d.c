@@ -20,10 +20,7 @@ int					key_hook(int keycode, t_root *root)
 	printf("Print keycode: %d\n", keycode);
 	if (keycode == 65307)
 	{
-		mlx_destroy_image(root->mlx, root->mlx_img);
-		mlx_destroy_window(root->mlx, root->mlx_win);
-		mlx_destroy_display(root->mlx);
-		free(root);
+		destroy(root, 4, 0);
 		exit(0);
 	}
 	draw_square(root->mlx_img, 0x00000000);
@@ -39,34 +36,47 @@ int					key_hook(int keycode, t_root *root)
 	return (1);
 }
 
-int					main(void)
+void				*destroy(t_root *root, int flag, char *error)
+{
+	if (flag > 3)
+		mlx_destroy_image(root->mlx, root->mlx_img);
+	if (flag > 2)
+		mlx_destroy_window(root->mlx, root->mlx_win);
+	if (flag > 1)
+		mlx_destroy_display(root->mlx);
+	if (flag > 0)
+		free(root);
+	if (error)
+		ft_putendl_fd(error, 2);
+	return (0);
+}
+
+t_root				*init(void)
 {
 	t_root			*root;
 
 	root = (t_root *)malloc(sizeof(t_root));
 	if (root == 0)
-	{
-		ft_putendl_fd("error: can't allocate memory", 2);
-		return (1);
-	}
+		return (destroy(root, 0, "error: can't allocate memory"));
 	root->mlx = mlx_init();
 	if (root->mlx == 0)
-	{
-		ft_putendl_fd("error: can't init mlx", 2);
-		return (1);
-	}
+		return (destroy(root, 1, "error: can't init mlx"));
 	root->mlx_win = mlx_new_window(root->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
 	if (root->mlx_win == 0)
-	{
-		ft_putendl_fd("error: can't create a new window", 2);
-		return (1);
-	}
+		return (destroy(root, 2, "error: can't create a new window"));
 	root->mlx_img = mlx_new_image(root->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (root->mlx_img == 0)
-	{
-		ft_putendl_fd("error: can't create a new image", 2);
+		return (destroy(root, 3, "error: can't create a new image"));
+	return (root);
+}
+
+int					main(void)
+{
+	t_root			*root;
+
+	root = init();
+	if (root == 0)
 		return (1);
-	}
 	mlx_hook(root->mlx_win, 2, (1L<<0), &key_hook, root);
 	mlx_loop(root->mlx);
 	return (0);
