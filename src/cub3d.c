@@ -32,6 +32,7 @@ int					key_hook(int keycode, t_root *root)
 		draw_square(root->mlx_img, 0x000000FF);
 	if (keycode == 65364)
 		draw_square(root->mlx_img, 0x00FFFFFF);
+	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
 	return (1);
 }
 
@@ -63,7 +64,6 @@ int					main(void)
 		ft_putendl_fd("error: can't create a new image", 2);
 		return (1);
 	}
-	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
 	mlx_hook(root->mlx_win, 2, (1L<<0), &key_hook, root);
 	mlx_loop(root->mlx);
 	return (0);
