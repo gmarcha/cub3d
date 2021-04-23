@@ -8,43 +8,59 @@ void				mlx_draw_pixel(t_img *mlx_img, int x, int y, int color)
 	*(unsigned int *)target = color;
 }
 
-int					key_hook(int keycode, t_img *mlx_img)
+void				draw_square(t_img *img, int color)
 {
-	printf("Hello World!\n");
+	for (int i = 0; i < WINDOW_WIDTH; i++)
+		for (int j = 0; j < WINDOW_HEIGHT; j++)
+			mlx_draw_pixel(img, i, j, color);
+}
+
+int					key_hook(int keycode, t_root *root)
+{
+	printf("Print keycode: %d\n", keycode);
+	if (keycode == 65361)
+		draw_square(root->mlx_img, 0x00FF0000);
+	else if (keycode == 65362)
+		draw_square(root->mlx_img, 0x0000FF00);
+	else if (keycode == 65363)
+		draw_square(root->mlx_img, 0x000000FF);
+	else if (keycode == 65364)
+		draw_square(root->mlx_img, 0x00FFFFFF);
+	else
+		draw_square(root->mlx_img, 0x00000000);
+	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
+	return (1);
 }
 
 int					main(void)
 {
-	void			*mlx;
-	void			*mlx_win;
-	void			*mlx_img;
+	t_root			*root;
 
-	mlx = mlx_init();
-	if (mlx == 0)
+	root = (t_root *)malloc(sizeof(t_root));
+	if (root == 0)
+	{
+		ft_putendl_fd("error: can't allocate memory", 2);
+		return (1);
+	}
+	root->mlx = mlx_init();
+	if (root->mlx == 0)
 	{
 		ft_putendl_fd("error: can't init mlx", 2);
 		return (1);
 	}
-	mlx_win = mlx_new_window(mlx, 640, 480, "cub3d");
-	if (mlx_win == 0)
+	root->mlx_win = mlx_new_window(root->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
+	if (root->mlx_win == 0)
 	{
 		ft_putendl_fd("error: can't create a new window", 2);
 		return (1);
 	}
-	mlx_img = mlx_new_image(mlx, 640, 480);
-	if (mlx_img == 0)
+	root->mlx_img = mlx_new_image(root->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (root->mlx_img == 0)
 	{
 		ft_putendl_fd("error: can't create a new image", 2);
 		return (1);
 	}
-
-	for (int i = 0; i < 200; i++)
-		for (int j = 0; j < 200; j++)
-			mlx_draw_pixel(mlx_img, i, j, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, mlx_img, 0, 0);
-	mlx_key_hook(vars.win, &key_hook, mlx_img);
-
-	ft_putendl_fd("Hello World!", 1);
-	mlx_loop(mlx);
+	mlx_key_hook(root->mlx_win, &key_hook, root);
+	mlx_loop(root->mlx);
 	return (0);
 }

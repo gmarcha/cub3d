@@ -13,6 +13,14 @@
 # include "mlx.h"
 # include "mlx_int.h"
 
+# define WINDOW_WIDTH 640
+# define WINDOW_HEIGHT 480
 
+typedef struct s_root
+{
+	void			*mlx;
+	void			*mlx_win;
+	t_img			*mlx_img;
+}				t_root;
 
 #endif
