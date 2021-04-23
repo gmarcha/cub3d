@@ -10,7 +10,7 @@ all:		$(NAME)
 
 $(NAME):	$(OBJ)
 			make -C libft
-			$(CC) $(FLAGS) -o $@ $^ $(LIB)
+			$(CC) $(FLAGS) -fsanitize=address -o $@ $^ $(LIB)
 
 obj/%.o:	src/%.c
 			$(CC) $(FLAGS) $(INC) -o $@ -c $<
