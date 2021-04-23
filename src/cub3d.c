@@ -20,7 +20,10 @@ int					key_hook(int keycode, t_root *root)
 	printf("Print keycode: %d\n", keycode);
 	if (keycode == 65307)
 	{
+		mlx_destroy_image(root->mlx, root->mlx_img);
 		mlx_destroy_window(root->mlx, root->mlx_win);
+		mlx_destroy_display(root->mlx);
+		free(root);
 		exit(0);
 	}
 	draw_square(root->mlx_img, 0x00000000);
