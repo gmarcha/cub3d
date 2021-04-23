@@ -18,7 +18,9 @@ void				draw_square(t_img *img, int color)
 int					key_hook(int keycode, t_root *root)
 {
 	printf("Print keycode: %d\n", keycode);
-	if (keycode == 65361)
+	if (keycode == 65307)
+		mlx_destroy_window(root->mlx, root->mlx_win);
+	else if (keycode == 65361)
 		draw_square(root->mlx_img, 0x00FF0000);
 	else if (keycode == 65362)
 		draw_square(root->mlx_img, 0x0000FF00);
@@ -60,7 +62,7 @@ int					main(void)
 		ft_putendl_fd("error: can't create a new image", 2);
 		return (1);
 	}
-	mlx_key_hook(root->mlx_win, &key_hook, root);
+	mlx_hook(root->mlx_win, 2, (1L<<0), &key_hook, root);
 	mlx_loop(root->mlx);
 	return (0);
 }
