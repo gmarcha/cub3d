@@ -9,9 +9,9 @@
 # include <stdio.h>
 # include <math.h>
 
-# include "libft.h"
 # include <mlx.h>
 # include <mlx_int.h>
+# include "libft.h"
 
 # define WINDOW_WIDTH 640
 # define WINDOW_HEIGHT 480
