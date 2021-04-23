@@ -4,8 +4,8 @@ void				mlx_draw_pixel(t_img *mlx_img, int x, int y, int color)
 {
 	char			*target;
 
-	target = mlx_img->image + (x * (mlx_img->bpp / 8) + y * mlx_img->size_line);
-	*target = color;
+	target = mlx_img->data + (x * (mlx_img->bpp / 8) + y * mlx_img->size_line);
+	*(unsigned int *)target = color;
 }
 
 int					main(void)
@@ -32,9 +32,11 @@ int					main(void)
 		ft_putendl_fd("error: can't create a new image", 2);
 		return (1);
 	}
-	mlx_draw_pixel(mlx_img, 5, 5, 0x00FF0000);
+	for (int i = 0; i < 200; i++)
+		for (int j = 0; j < 200; j++)
+			mlx_draw_pixel(mlx_img, 5, 5, 0x00FF0000);
 	mlx_put_image_to_window(mlx, mlx_win, mlx_img, 0, 0);
-	mlx_loop(mlx);
 	ft_putendl_fd("Hello World!", 1);
+	mlx_loop(mlx);
 	return (0);
 }
