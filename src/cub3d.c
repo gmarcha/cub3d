@@ -19,18 +19,19 @@ int					key_hook(int keycode, t_root *root)
 {
 	printf("Print keycode: %d\n", keycode);
 	if (keycode == 65307)
+	{
 		mlx_destroy_window(root->mlx, root->mlx_win);
-	else if (keycode == 65361)
+		return (0);
+	}
+	draw_square(root->mlx_img, 0x00000000);
+	if (keycode == 65361)
 		draw_square(root->mlx_img, 0x00FF0000);
-	else if (keycode == 65362)
+	if (keycode == 65362)
 		draw_square(root->mlx_img, 0x0000FF00);
-	else if (keycode == 65363)
+	if (keycode == 65363)
 		draw_square(root->mlx_img, 0x000000FF);
-	else if (keycode == 65364)
+	if (keycode == 65364)
 		draw_square(root->mlx_img, 0x00FFFFFF);
-	else
-		draw_square(root->mlx_img, 0x00000000);
-	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
 	return (1);
 }
 
@@ -62,6 +63,7 @@ int					main(void)
 		ft_putendl_fd("error: can't create a new image", 2);
 		return (1);
 	}
+	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
 	mlx_hook(root->mlx_win, 2, (1L<<0), &key_hook, root);
 	mlx_loop(root->mlx);
 	return (0);
