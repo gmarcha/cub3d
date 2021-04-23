@@ -1,11 +1,11 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# define COMPILER (gcc -Wall -Wextra -Werror -fsanitize=address)
-
-typedef unsigned long long	size_t;
-
-# include <unistd.h>
+# ifdef _WIN32
+#  include <io.h>
+# else
+#  include <unistd.h>
+# endif
 # include <stdlib.h>
 
 typedef struct				s_list

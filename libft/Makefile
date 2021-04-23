@@ -59,7 +59,7 @@ bonus:		$(OBJ) $(BONUS_OBJ)
 			$(CC) $(FLAGS) -o $@ -c $<
 
 clean:
-			del *.o
+			rm -rf $(OBJ)
 
 fclean:		clean
 			rm -rf $(NAME)

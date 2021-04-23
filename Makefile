@@ -2,7 +2,7 @@ NAME		= cub3d
 CC			= gcc
 FLAGS		= -Wall -Wextra -Werror
 INC			= -I ./inc
-LIB			= -L ./libft -lft
+LIB			= -L ./libft -lft -lmlx -lXext -lX11 -lm -lbsd
 OBJ			= $(patsubst src%, obj%, $(SRC:.c=.o))
 SRC			= src/cub3d.c
 
