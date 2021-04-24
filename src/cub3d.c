@@ -15,6 +15,21 @@ void				draw_square(t_img *img, int color)
 			mlx_draw_pixel(img, i, j, color);
 }
 
+void				*destroy(t_root *root, int flag, char *error)
+{
+	if (flag > 3)
+		mlx_destroy_image(root->mlx, root->mlx_img);
+	if (flag > 2)
+		mlx_destroy_window(root->mlx, root->mlx_win);
+	if (flag > 1)
+		mlx_destroy_display(root->mlx);
+	if (flag > 0)
+		free(root);
+	if (error)
+		ft_putendl_fd(error, 2);
+	return (0);
+}
+
 int					key_hook(int keycode, t_root *root)
 {
 	printf("Print keycode: %d\n", keycode);
@@ -34,21 +49,6 @@ int					key_hook(int keycode, t_root *root)
 		draw_square(root->mlx_img, 0x00FFFFFF);
 	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
 	return (1);
-}
-
-void				*destroy(t_root *root, int flag, char *error)
-{
-	if (flag > 3)
-		mlx_destroy_image(root->mlx, root->mlx_img);
-	if (flag > 2)
-		mlx_destroy_window(root->mlx, root->mlx_win);
-	if (flag > 1)
-		mlx_destroy_display(root->mlx);
-	if (flag > 0)
-		free(root);
-	if (error)
-		ft_putendl_fd(error, 2);
-	return (0);
 }
 
 t_root				*init(void)
