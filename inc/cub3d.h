@@ -45,6 +45,8 @@ t_root				*parse_color(t_root *root, char **buf, int *floor);
 
 t_root				*parse_resolution(t_root *root, char **buf);
 
+t_root				*parse_scene(char *buf);
+
 t_root				*parse_texture(t_root *root, char **buf, t_img **img);
 
 t_root				*root_init(void);
