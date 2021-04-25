@@ -29,6 +29,7 @@ typedef struct s_root
 	int				ceil_color;
 	int				**map;
 	int				nb_lines;
+	int				size_line;
 }				t_root;
 
 t_root				*check_info(t_root *root);

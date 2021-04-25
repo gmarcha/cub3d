@@ -17,5 +17,10 @@ t_root	*parse_scene(char *buf)
 	}
 	if (check_info(root) == 0)
 		return (0);
+	root->map = parse_map(root, buf);
+	if (root-> map == 0)
+		return (0);
+	if (check_map(root) == 0)
+		return (0);
 	return (root);
 }
