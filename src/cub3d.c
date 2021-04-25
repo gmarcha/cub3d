@@ -1,70 +1,67 @@
 #include "cub3d.h"
 
-t_root				*parse_info(t_root *root, char **buf)
+t_root				*parse_wall(t_root *root, char **buf)
 {
-	if (**buf == 'R')
-	{
-		(*buf)++;
-		if (parse_resolution(root, buf) == 0)
-			return (0);
-		return (root);
-	}
+	(*buf) += 2;
 	if (**buf == 'N' && (*buf)[1] == 'O')
-	{
-		(*buf) += 2;
 		if (parse_texture(root, buf, &root->walls_texture[0]) == 0)
 			return (0);
-		return (root);
-	}
 	if (**buf == 'S' && (*buf)[1] == 'O')
-	{
-		(*buf) += 2;
 		if (parse_texture(root, buf, &root->walls_texture[2]) == 0)
 			return (0);
-		return (root);
-	}
 	if (**buf == 'W' && (*buf)[1] == 'E')
-	{
-		(*buf) += 2;
 		if (parse_texture(root, buf, &root->walls_texture[1]) == 0)
 			return (0);
-		return (root);
-	}
 	if (**buf == 'E' && (*buf)[1] == 'A')
-	{
-		(*buf) += 2;
 		if (parse_texture(root, buf, &root->walls_texture[3]) == 0)
 			return (0);
-		return (root);
-	}
-	if (**buf == 'S')
+	return (root);
+}
+
+t_root				*parse_info(t_root *root, char **buf)
+{
+	if ((**buf == 'N' && (*buf)[1] == 'O') || (**buf == 'S' && (*buf)[1] == 'O')
+	|| (**buf == 'W' && (*buf)[1] == 'E') || (**buf == 'E' && (*buf)[1] == 'A'))
+		if (parse_wall(root, buf) == 0)
+			return (0);
+	if (**buf == 'R' || **buf == 'S' || **buf == 'F' || **buf == 'C')
 	{
 		(*buf)++;
-		if (parse_texture(root, buf, &root->sprite_texture) == 0)
-			return (0);
-		return (root);
-	}
-	if (**buf == 'F')
-	{
-		(*buf)++;
-		if (parse_color(root, buf, &root->floor_color) == 0)
-			return (0);
-		return (root);
-	}
-	if (**buf == 'C')
-	{
-		(*buf)++;
-		if (parse_color(root, buf, &root->ceil_color) == 0)
-			return (0);
+		if (**buf == 'R')
+			if (parse_resolution(root, buf) == 0)
+				return (0);
+		if (**buf == 'S')
+			if (parse_texture(root, buf, &root->sprite_texture) == 0)
+				return (0);
+		if (**buf == 'F')
+			if (parse_color(root, buf, &root->floor_color) == 0)
+				return (0);
+		if (**buf == 'C')
+			if (parse_color(root, buf, &root->ceil_color) == 0)
+				return (0);
 		return (root);
 	}
 	return (destroy(root, 2, "error: wrong identifier"));
 }
 
+t_root				*check_info(t_root *root)
+{
+	int				i;
+
+	if (root->window_width == -1 || root->window_height == -1)
+		return (destroy(root, 2, "error: resolution is missing"));
+	i = 0;
+	while (i < 4)
+		if (root->walls_texture[i++] == 0 || root->sprite_texture == 0)
+			return (destroy(root, 2, "error: texture is missing"));
+	if (root->floor_color == -1 || root->ceil_color == -1)
+		return (destroy(root, 2, "error: floor or ceil color is missing"));
+	return (root);
+}
+
 t_root				*parse_scene(char *buf)
 {
 	t_root			*root;
-	int				i;
 
 	root = root_init();
 	if (root == 0)
@@ -77,15 +74,8 @@ t_root				*parse_scene(char *buf)
 			if (parse_info(root, &buf) == 0)
 				return (0);
 	}
-	if (root->window_width == -1 || root->window_height == -1)
-		return (destroy(root, 2, "error: resolution is missing"));
-	i = 0;
-	while (i < 4)
-		if (root->walls_texture[i++] == 0 || root->sprite_texture == 0)
-			return (destroy(root, 2, "error: texture is missing"));
-	if (root->floor_color == -1 || root->ceil_color == -1)
-		return (destroy(root, 2, "error: floor or ceil color is missing"));
-	
+	if (check_info(root) == 0)
+		return (0);
 	return (root);
 }
 
