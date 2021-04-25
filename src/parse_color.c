@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-t_root				*parse_color(t_root *root, char **buf, int *floor)
+t_root	*parse_color(t_root *root, char **buf, int *floor)
 {
 	int				rgb[3];
 	int				i;

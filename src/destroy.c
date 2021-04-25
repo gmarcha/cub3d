@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void				free_root(t_root *root)
+void	free_root(t_root *root)
 {
 	int				i;
 
@@ -22,7 +22,7 @@ void				free_root(t_root *root)
 	free(root);
 }
 
-void				*destroy(t_root *root, int flag, char *error)
+void	*destroy(t_root *root, int flag, char *error)
 {
 	if (flag > 3)
 		mlx_destroy_image(root->mlx, root->mlx_img);

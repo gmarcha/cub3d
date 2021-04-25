@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-t_root				*init_scene(char *file)
+t_root	*init_scene(char *file)
 {
 	t_root			*root;
 	int				fd;

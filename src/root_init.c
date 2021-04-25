@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-t_root				*root_init(void)
+t_root	*root_init(void)
 {
 	t_root			*root;
 	int				i;

@@ -1,17 +1,17 @@
 #include "cub3d.h"
 
-t_root				*init(char *file)
+t_root	*init(char *file)
 {
-	t_root			*root;
+	t_root			*r;
 
-	root = init_scene(file);
-	if (root == 0)
+	r = init_scene(file);
+	if (r == 0)
 		return (0);
-	root->mlx_win = mlx_new_window(root->mlx, root->window_width, root->window_height, "cub3d");
-	if (root->mlx_win == 0)
-		return (destroy(root, 2, "error: can't create a new window"));
-	root->mlx_img = mlx_new_image(root->mlx, root->window_width, root->window_height);
-	if (root->mlx_img == 0)
-		return (destroy(root, 3, "error: can't create a new image"));
-	return (root);
+	r->mlx_win = mlx_new_window(r->mlx, r->width, r->height, "cub3d");
+	if (r->mlx_win == 0)
+		return (destroy(r, 2, "error: can't create a new window"));
+	r->mlx_img = mlx_new_image(r->mlx, r->width, r->height);
+	if (r->mlx_img == 0)
+		return (destroy(r, 3, "error: can't create a new image"));
+	return (r);
 }

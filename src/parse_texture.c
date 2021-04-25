@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-t_root				*parse_texture(t_root *root, char **buf, t_img **img)
+t_root	*parse_texture(t_root *root, char **buf, t_img **img)
 {
 	char			*path;
 	int				len;

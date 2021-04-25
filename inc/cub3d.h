@@ -21,8 +21,8 @@ typedef struct s_root
 	void			*mlx;
 	void			*mlx_win;
 	t_img			*mlx_img;
-	int				window_width;
-	int				window_height;
+	int				width;
+	int				height;
 	t_img			*walls_texture[4];
 	t_img			*sprite_texture;
 	int				floor_color;
@@ -30,6 +30,8 @@ typedef struct s_root
 	int				**map;
 	int				nb_lines;
 }				t_root;
+
+t_root				*check_info(t_root *root);
 
 void				free_root(t_root *root);
 void				*destroy(t_root *root, int flag, char *error);
@@ -43,11 +45,17 @@ int					mlx_rgb_to_int(int o, int r, int g, int b);
 
 t_root				*parse_color(t_root *root, char **buf, int *floor);
 
+t_root				*parse_info(t_root *root, char **buf);
+
 t_root				*parse_resolution(t_root *root, char **buf);
 
 t_root				*parse_scene(char *buf);
 
 t_root				*parse_texture(t_root *root, char **buf, t_img **img);
+
+t_root				*parse_value(t_root *root, char **buf);
+
+t_root				*parse_wall(t_root *root, char **buf);
 
 t_root				*root_init(void);
 

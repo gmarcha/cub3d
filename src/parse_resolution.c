@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-t_root				*parse_resolution(t_root *root, char **buf)
+t_root	*parse_resolution(t_root *root, char **buf)
 {
 	if (root->window_width != -1 || root->window_height != -1)
 		return (destroy(root, 2, "error: resolution: multiple definition"));

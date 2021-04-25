@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int					ft_strclen(char *s, int c)
+int	ft_strclen(char *s, int c)
 {
 	int			i;
 
@@ -10,16 +10,24 @@ int					ft_strclen(char *s, int c)
 	return (i);
 }
 
-int					is_space(int c)
+int	is_space(int c)
 {
 	if (c == 32 || (c >= 9 && c <= 13))
 		return (1);
 	return (0);
 }
 
-void				draw_square(t_img *img, int color)
+void	draw_square(t_img *img, int color)
 {
-	for (int i = 0; i < 640; i++)
-		for (int j = 0; j < 480; j++)
-			mlx_draw_pixel(img, i, j, color);
+	int				i;
+	int				j;
+
+	i = 0;
+	while (i < 640)
+	{
+		j = 0;
+		while (j < 480)
+			mlx_draw_pixel(img, i, j++, color);
+		i++;
+	}
 }

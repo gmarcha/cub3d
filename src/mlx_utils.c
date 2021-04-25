@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void				mlx_draw_pixel(t_img *mlx_img, int x, int y, int color)
+void	mlx_draw_pixel(t_img *mlx_img, int x, int y, int color)
 {
 	char			*target;
 
@@ -8,7 +8,7 @@ void				mlx_draw_pixel(t_img *mlx_img, int x, int y, int color)
 	*(unsigned int *)target = color;
 }
 
-int					mlx_rgb_to_int(int o, int r, int g, int b)
+int	mlx_rgb_to_int(int o, int r, int g, int b)
 {
-	return(o << 24 | r << 16 | g << 8 | b);
+	return (o << 24 | r << 16 | g << 8 | b);
 }
