@@ -95,14 +95,14 @@ t_root				*parse_resolution(t_root *root, char **buf)
 	return (root);
 }
 
-t_root				*parse_texture(t_root *root, char **buf, t_img *img)
+t_root				*parse_texture(t_root *root, char **buf, t_img **img)
 {
 	char			*path;
 	int				len;
 	int				width;
 	int				height;
 
-	if (img)
+	if (*img)
 		return (destroy(root, 2, "error: multiple texture definition"));
 	while (**buf && is_space(**buf))
 		(*buf)++;
@@ -110,23 +110,24 @@ t_root				*parse_texture(t_root *root, char **buf, t_img *img)
 	path = ft_substr(*buf, 0, len);
 	if (path == 0)
 		return (destroy(root, 2, "error: no texture file"));
-	img = mlx_xpm_file_to_image(root->mlx, path, &width, &height);
+	*img = mlx_xpm_file_to_image(root->mlx, path, &width, &height);
 	free(path);
-	if (img == 0)
+	if (*img == 0)
 		return (destroy(root, 2, "error: can't load texture"));
-	img->width = width;
-	img->height = height;
+	(*img)->width = width;
+	(*img)->height = height;
+	*buf += len;
 	if (**buf != '\n')
 		return (destroy(root, 2, "error: invalid texture path"));
 	return (root);
 }
 
-t_root				*parse_color(t_root *root, char **buf, int floor)
+t_root				*parse_color(t_root *root, char **buf, int *floor)
 {
 	int				rgb[3];
 	int				i;
 
-	if (floor != -1)
+	if (*floor != -1)
 		return (destroy(root, 2, "error: multiple definition floor or ceil"));
 	while (**buf && is_space(**buf))
 		(*buf)++;
@@ -145,7 +146,7 @@ t_root				*parse_color(t_root *root, char **buf, int floor)
 	}
 	if (**buf != '\n')
 		return (destroy(root, 2, "error: invalid floor or ceil color"));
-	floor = mlx_rgb_to_int(0, rgb[0], rgb[1], rgb[2]);
+	*floor = mlx_rgb_to_int(0, rgb[0], rgb[1], rgb[2]);
 	return (root);
 }
 
@@ -195,43 +196,43 @@ t_root				*parse_scene(char *buf)
 			else if (*buf == 'N' && buf[1] == 'O')
 			{
 				buf += 2;
-				if (parse_texture(root, &buf, root->walls_texture[0]) == 0)
+				if (parse_texture(root, &buf, &root->walls_texture[0]) == 0)
 					return (0);
 			}
 			else if (*buf == 'S' && buf[1] == 'O')
 			{
 				buf += 2;
-				if (parse_texture(root, &buf, root->walls_texture[2]) == 0)
+				if (parse_texture(root, &buf, &root->walls_texture[2]) == 0)
 					return (0);
 			}
 			else if (*buf == 'W' && buf[1] == 'E')
 			{
 				buf += 2;
-				if (parse_texture(root, &buf, root->walls_texture[1]) == 0)
+				if (parse_texture(root, &buf, &root->walls_texture[1]) == 0)
 					return (0);
 			}
 			else if (*buf == 'E' && buf[1] == 'A')
 			{
 				buf += 2;
-				if (parse_texture(root, &buf, root->walls_texture[3]) == 0)
+				if (parse_texture(root, &buf, &root->walls_texture[3]) == 0)
 					return (0);
 			}
 			else if (*buf == 'S')
 			{
 				buf++;
-				if (parse_texture(root, &buf, root->sprite_texture) == 0)
+				if (parse_texture(root, &buf, &root->sprite_texture) == 0)
 					return (0);
 			}
 			else if (*buf == 'F')
 			{
 				buf++;
-				if (parse_color(root, &buf, root->floor_color) == 0)
+				if (parse_color(root, &buf, &root->floor_color) == 0)
 					return (0);
 			}
 			else if (*buf == 'C')
 			{
 				buf++;
-				if (parse_color(root, &buf, root->ceil_color) == 0)
+				if (parse_color(root, &buf, &root->ceil_color) == 0)
 					return (0);
 			}
 			else

@@ -4,7 +4,7 @@ SO ./img/bricks.xpm
 WE ./img/coal.xpm
 EA ./img/planks.xpm
 
-S ./path_to_the_sprite_texture
+S ./img/sprite.xpm
 F 220,100,0
 C 225,30,0
 
