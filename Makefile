@@ -13,9 +13,10 @@ SRC			=	src/check_info.c \
 				src/parse_color.c \
 				src/parse_info.c \
 				src/parse_resolution.c \
+				src/parse_scene.c \
+				src/parse_texture.c \
 				src/parse_value.c \
 				src/parse_wall.c \
-				src/parse_texture.c \
 				src/root_init.c \
 				src/utils.c
 
