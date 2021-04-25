@@ -31,4 +31,26 @@ typedef struct s_root
 	int				nb_lines;
 }				t_root;
 
+void				free_root(t_root *root);
+void				*destroy(t_root *root, int flag, char *error);
+
+t_root				*init_scene(char *file);
+
+t_root				*init(char *file);
+
+void				mlx_draw_pixel(t_img *mlx_img, int x, int y, int color);
+int					mlx_rgb_to_int(int o, int r, int g, int b);
+
+t_root				*parse_color(t_root *root, char **buf, int *floor);
+
+t_root				*parse_resolution(t_root *root, char **buf);
+
+t_root				*parse_texture(t_root *root, char **buf, t_img **img);
+
+t_root				*root_init(void);
+
+int					ft_strclen(char *s, int c);
+int					is_space(int c);
+void				draw_square(t_img *img, int color);
+
 #endif
