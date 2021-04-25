@@ -54,6 +54,8 @@ void				free_root(t_root *root)
 			free(root->map[i++]);
 		free(root->map);
 	}
+	if (root->mlx)
+		mlx_destroy_display(root->mlx);
 	free(root);
 }
 
@@ -63,8 +65,6 @@ void				*destroy(t_root *root, int flag, char *error)
 		mlx_destroy_image(root->mlx, root->mlx_img);
 	if (flag > 2)
 		mlx_destroy_window(root->mlx, root->mlx_win);
-	if (flag > 1)
-		mlx_destroy_display(root->mlx);
 	if (flag > 0)
 		free_root(root);
 	if (error)
@@ -169,7 +169,7 @@ t_root				*root_init(void)
 	root->map = 0;
 	root->mlx = mlx_init();
 	if (root->mlx == 0)
-		return (destroy(root, 1, "error: can't init mlx"));
+		return (destroy(root, 2, "error: can't init mlx"));
 	return (root);
 }
 
