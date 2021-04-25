@@ -1,4 +1,16 @@
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/15 21:20:56 by gamarcha          #+#    #+#             */
+/*   Updated: 2021/04/15 21:20:56 by gamarcha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 
 static size_t	ft_strsize(const char *s)
 {
@@ -10,7 +22,7 @@ static size_t	ft_strsize(const char *s)
 	return (i);
 }
 
-static int		is_set(char c, const char *set)
+static int	is_set(char c, const char *set)
 {
 	int			i;
 
@@ -21,7 +33,7 @@ static int		is_set(char c, const char *set)
 	return (0);
 }
 
-char			*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	char		*str;
 	int			start;
@@ -34,7 +46,8 @@ char			*ft_strtrim(char const *s1, char const *set)
 	end = ft_strsize(s1);
 	while (start < end && is_set(s1[end - 1], set))
 		end--;
-	if (!(str = (char *)malloc(end - start + 1)))
+	str = (char *)malloc(end - start + 1);
+	if (str == 0)
 		return (0);
 	i = 0;
 	while (start < end)

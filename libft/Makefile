@@ -53,13 +53,13 @@ $(NAME):	$(OBJ)
 			ar rcs $@ $^
 
 bonus:		$(OBJ) $(BONUS_OBJ)
-			ar rcs $@ $^
+			ar rcs $(NAME) $^
 
 %.o:		%.c
 			$(CC) $(FLAGS) -o $@ -c $<
 
 clean:
-			rm -rf $(OBJ)
+			rm -rf $(OBJ) $(BONUS_OBJ)
 
 fclean:		clean
 			rm -rf $(NAME)

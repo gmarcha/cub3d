@@ -1,4 +1,16 @@
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/15 21:20:46 by gamarcha          #+#    #+#             */
+/*   Updated: 2021/04/15 21:20:46 by gamarcha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 
 static size_t	ft_strsize(const char *s)
 {
@@ -17,15 +29,23 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t			i;
 
 	len_s = ft_strsize(s);
-	if (!(str = (char *)malloc(len + 1)))
+	if (len_s < start)
+		str = (char *)malloc(1);
+	else if (len_s - start < len)
+		str = (char *)malloc(len_s - start + 1);
+	else
+		str = (char *)malloc(len + 1);
+	if (str == 0)
 		return (0);
 	i = 0;
 	if (start < len_s)
+	{
 		while (s[i + start] && i < len)
 		{
 			str[i] = s[i + start];
 			i++;
 		}
+	}
 	str[i] = 0;
 	return (str);
 }

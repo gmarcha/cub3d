@@ -1,10 +1,25 @@
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/15 21:16:47 by gamarcha          #+#    #+#             */
+/*   Updated: 2021/04/15 21:16:47 by gamarcha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 
 static int	get_number_size(int n)
 {
 	int				i;
 
-	i = (n <= 0) ? 1 : 0;
+	if (n <= 0)
+		i = 1;
+	else
+		i = 0;
 	while (n)
 	{
 		n /= 10;
@@ -13,17 +28,21 @@ static int	get_number_size(int n)
 	return (i);
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char			*nbr;
 	unsigned int	nb;
 	int				len_nbr;
 
 	len_nbr = get_number_size(n);
-	if (!(nbr = (char *)malloc(len_nbr + 1)))
+	nbr = (char *)malloc(len_nbr + 1);
+	if (nbr == 0)
 		return (0);
 	nbr[len_nbr] = 0;
-	nb = (n < 0) ? -n : n;
+	if (n < 0)
+		nb = -n;
+	else
+		nb = n;
 	while (len_nbr--)
 	{
 		nbr[len_nbr] = "0123456789"[nb % 10];

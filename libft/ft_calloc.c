@@ -1,4 +1,16 @@
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/15 21:14:47 by gamarcha          #+#    #+#             */
+/*   Updated: 2021/04/15 21:14:47 by gamarcha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
@@ -6,7 +18,8 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	void			*s;
 	size_t			i;
 
-	if (!(s = malloc(nmemb * size)))
+	s = malloc(nmemb * size);
+	if (s == 0)
 		return (0);
 	str = s;
 	i = 0;
