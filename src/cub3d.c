@@ -78,12 +78,12 @@ t_root				*parse_resolution(t_root *root, char **buf)
 		return (destroy(root, 2, "error: resolution: multiple definition"));
 	while (**buf && is_space(**buf))
 		(*buf)++;
-	root->window_width == 0;
+	root->window_width = 0;
 	while (**buf >= '0' && **buf <= '9')
 		root->window_width = root->window_width * 10 + *(*buf)++ - 48;
 	while (**buf && is_space(**buf))
 		(*buf)++;
-	root->window_height == 0;
+	root->window_height = 0;
 	while (**buf >= '0' && **buf <= '9')
 		root->window_height = root->window_height * 10 + *(*buf)++ - 48;
 	if (**buf != '\n' || root->window_width == 0 || root->window_height == 0)
@@ -110,7 +110,7 @@ t_root				*parse_texture(t_root *root, char **buf, t_img *img)
 		return (destroy(root, 2, "error: no texture file"));
 	img = mlx_xpm_file_to_image(root->mlx, path, &img->width, &img->height);
 	free(path);
-	if (img == 0);
+	if (img == 0)
 		return (destroy(root, 2, "error: can't load texture"));
 	if (**buf != '\n')
 		return (destroy(root, 2, "error: invalid texture path"));
@@ -165,6 +165,7 @@ t_root				*root_init(void)
 	root->mlx = mlx_init();
 	if (root->mlx == 0)
 		return (destroy(root, 1, "error: can't init mlx"));
+	return (root);
 }
 
 t_root				*parse_scene(char *buf)
@@ -182,42 +183,50 @@ t_root				*parse_scene(char *buf)
 		{
 			if (*buf == 'R')
 			{
-				if (parse_resolution(root, &(++buf)) == 0)
+				buf++;
+				if (parse_resolution(root, &buf) == 0)
 					return (0);
 			}
 			else if (*buf == 'N' && buf[1] == 'O')
 			{
-				if (parse_texture(root, &(buf += 2), root->walls_texture[0]) == 0)
+				buf += 2;
+				if (parse_texture(root, &buf, root->walls_texture[0]) == 0)
 					return (0);
 			}
 			else if (*buf == 'S' && buf[1] == 'O')
 			{
-				if (parse_texture(root, &(buf += 2), root->walls_texture[2]) == 0)
+				buf += 2;
+				if (parse_texture(root, &buf, root->walls_texture[2]) == 0)
 					return (0);
 			}
 			else if (*buf == 'W' && buf[1] == 'E')
 			{
-				if (parse_texture(root, &(buf += 2), root->walls_texture[1]) == 0)
+				buf += 2;
+				if (parse_texture(root, &buf, root->walls_texture[1]) == 0)
 					return (0);
 			}
 			else if (*buf == 'E' && buf[1] == 'A')
 			{
-				if (parse_texture(root, &(buf += 2), root->walls_texture[3]) == 0)
+				buf += 2;
+				if (parse_texture(root, &buf, root->walls_texture[3]) == 0)
 					return (0);
 			}
 			else if (*buf == 'S')
 			{
-				if (parse_texture(root, &(++buf), root->sprite_texture) == 0)
+				buf++;
+				if (parse_texture(root, &buf, root->sprite_texture) == 0)
 					return (0);
 			}
 			else if (*buf == 'F')
 			{
-				if (parse_color(root, &(++buf), root->floor_color) == 0)
+				buf++;
+				if (parse_color(root, &buf, root->floor_color) == 0)
 					return (0);
 			}
 			else if (*buf == 'C')
 			{
-				if (parse_color(root, &(++buf), root->ceil_color) == 0)
+				buf++;
+				if (parse_color(root, &buf, root->ceil_color) == 0)
 					return (0);
 			}
 			else
@@ -236,13 +245,13 @@ t_root				*init_scene(char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (destroy(root, 0, "error: can't open the scene (*.map)"));
+		return (destroy(0, 0, "error: can't open the scene (*.map)"));
 	ret = read(fd, buf, 32768);
 	close(fd);
 	if (ret == -1)
-		return (destroy(root, 0, "error: can't read the scene (*.map)"));
+		return (destroy(0, 0, "error: can't read the scene (*.map)"));
 	if (ret == 0)
-		return (destroy(root, 0, "error: scene file is empty"));
+		return (destroy(0, 0, "error: scene file is empty"));
 	buf[ret] = 0;
 	root = parse_scene(buf);
 	if (root == 0)
