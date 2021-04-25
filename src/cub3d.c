@@ -73,6 +73,10 @@ void				parse_resolution(t_root *root, char **buf)
 		root->window_height = root->window_height * 10 + *(*buf)++ - 48;
 	if (root->window_width == 0 || root->window_height == 0)
 		return (destroy(root, 1, "error: wrong resolution"));
+	if (root->window_width > SCREEN_WIDTH)
+		root->window_width = SCREEN_WIDTH;
+	if (root->window_height > SCREEN_HEIGHT)
+		root->window_height = SCREEN_HEIGHT;
 	return (root);
 }
 

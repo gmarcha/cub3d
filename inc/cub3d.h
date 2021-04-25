@@ -13,6 +13,9 @@
 # include <mlx_int.h>
 # include "libft.h"
 
+# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGHT 1080
+
 typedef struct s_root
 {
 	void			*mlx;
