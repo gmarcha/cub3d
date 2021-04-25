@@ -1,5 +1,15 @@
 #include "cub3d.h"
 
+int					ft_strclen(char *s, int c)
+{
+	int			i;
+
+	i = 0;
+	while (s[i] && s[i] != c)
+		i++;
+	return (i);
+}
+
 int					is_space(int c)
 {
 	if (c == 32 || (c >= 9 && c <= 13))
@@ -13,6 +23,11 @@ void				mlx_draw_pixel(t_img *mlx_img, int x, int y, int color)
 
 	target = mlx_img->data + (x * (mlx_img->bpp / 8) + y * mlx_img->size_line);
 	*(unsigned int *)target = color;
+}
+
+int					mlx_rgb_to_int(int o, int r, int g, int b)
+{
+	return(o << 24 | r << 16 | g << 8 | b);
 }
 
 void				draw_square(t_img *img, int color)
@@ -57,10 +72,10 @@ void				*destroy(t_root *root, int flag, char *error)
 	return (0);
 }
 
-void				parse_resolution(t_root *root, char **buf)
+t_root				*parse_resolution(t_root *root, char **buf)
 {
 	if (root->window_width != -1 || root->window_height != -1)
-		return (destroy(root, 1, "error: multiple defnition of resolution"));
+		return (destroy(root, 2, "error: resolution: multiple definition"));
 	while (**buf && is_space(**buf))
 		(*buf)++;
 	root->window_width == 0;
@@ -71,8 +86,8 @@ void				parse_resolution(t_root *root, char **buf)
 	root->window_height == 0;
 	while (**buf >= '0' && **buf <= '9')
 		root->window_height = root->window_height * 10 + *(*buf)++ - 48;
-	if (root->window_width == 0 || root->window_height == 0)
-		return (destroy(root, 1, "error: wrong resolution"));
+	if (**buf != '\n' || root->window_width == 0 || root->window_height == 0)
+		return (destroy(root, 2, "error: invalid resolution"));
 	if (root->window_width > SCREEN_WIDTH)
 		root->window_width = SCREEN_WIDTH;
 	if (root->window_height > SCREEN_HEIGHT)
@@ -80,14 +95,54 @@ void				parse_resolution(t_root *root, char **buf)
 	return (root);
 }
 
-void				parse_texture(t_root *root, char **buf, int card)
+t_root				*parse_texture(t_root *root, char **buf, t_img *img)
 {
+	char			*path;
+	int				len;
 
+	if (img)
+		return (destroy(root, 2, "error: multiple texture definition"));
+	while (**buf && is_space(**buf))
+		(*buf)++;
+	len = ft_strclen(*buf, '\n');
+	path = ft_substr(*buf, 0, len);
+	if (path == 0)
+		return (destroy(root, 2, "error: no texture file"));
+	img = mlx_xpm_file_to_image(root->mlx, path, &img->width, &img->height);
+	free(path);
+	if (img == 0);
+		return (destroy(root, 2, "error: can't load texture"));
+	if (**buf != '\n')
+		return (destroy(root, 2, "error: invalid texture path"));
+	return (root);
 }
 
-void				parse_color(t_root *root, char **buf, int floor)
+t_root				*parse_color(t_root *root, char **buf, int floor)
 {
-	
+	int				rgb[3];
+	int				i;
+
+	if (floor != -1)
+		return (destroy(root, 2, "error: multiple definition floor or ceil"));
+	while (**buf && is_space(**buf))
+		(*buf)++;
+	i = -1;
+	while (++i < 3)
+	{
+		if (!(**buf >= '0' && **buf <= '9'))
+			return (destroy(root, 2, "error: invalid value in color"));
+		rgb[i] = 0;
+		while (**buf >= '0' && **buf <= '9')
+			rgb[i] = rgb[i] * 10 + *(*buf)++ - 48;
+		if (rgb[i] > 255)
+			return (destroy(root, 2, "error: value is too high in color"));
+		if (i < 2 && *(*buf)++ != ',')
+			return (destroy(root, 2, "error: invalid separator in color"));
+	}
+	if (**buf != '\n')
+		return (destroy(root, 2, "error: invalid floor or ceil color"));
+	floor = mlx_rgb_to_int(0, rgb[0], rgb[1], rgb[2]);
+	return (root);
 }
 
 t_root				*root_init(void)
@@ -107,6 +162,9 @@ t_root				*root_init(void)
 	root->floor_color = -1;
 	root->ceil_color = -1;
 	root->map = 0;
+	root->mlx = mlx_init();
+	if (root->mlx == 0)
+		return (destroy(root, 1, "error: can't init mlx"));
 }
 
 t_root				*parse_scene(char *buf)
@@ -129,41 +187,41 @@ t_root				*parse_scene(char *buf)
 			}
 			else if (*buf == 'N' && buf[1] == 'O')
 			{
-				if (parse_texture(root, &(buf += 2), 0) == 0)
+				if (parse_texture(root, &(buf += 2), root->walls_texture[0]) == 0)
 					return (0);
 			}
 			else if (*buf == 'S' && buf[1] == 'O')
 			{
-				if (parse_texture(root, &(buf += 2), 2) == 0)
+				if (parse_texture(root, &(buf += 2), root->walls_texture[2]) == 0)
 					return (0);
 			}
 			else if (*buf == 'W' && buf[1] == 'E')
 			{
-				if (parse_texture(root, &(buf += 2), 1) == 0)
+				if (parse_texture(root, &(buf += 2), root->walls_texture[1]) == 0)
 					return (0);
 			}
 			else if (*buf == 'E' && buf[1] == 'A')
 			{
-				if (parse_texture(root, &(buf += 2), 3) == 0)
+				if (parse_texture(root, &(buf += 2), root->walls_texture[3]) == 0)
 					return (0);
 			}
 			else if (*buf == 'S')
 			{
-				if (parse_texture(root, &(++buf), -1) == 0)
+				if (parse_texture(root, &(++buf), root->sprite_texture) == 0)
 					return (0);
 			}
 			else if (*buf == 'F')
 			{
-				if (parse_color(root, &(++buf), 1) == 0)
+				if (parse_color(root, &(++buf), root->floor_color) == 0)
 					return (0);
 			}
 			else if (*buf == 'C')
 			{
-				if (parse_color(root, &(++buf), 0) == 0)
+				if (parse_color(root, &(++buf), root->ceil_color) == 0)
 					return (0);
 			}
 			else
-				return (destroy(root, 1, "error: wrong identifier in scene file"));
+				return (destroy(root, 2, "error: wrong identifier"));
 		}
 	}
 	return (root);
@@ -199,9 +257,6 @@ t_root				*init(char *file)
 	root = init_scene(file);
 	if (root == 0)
 		return (0);
-	root->mlx = mlx_init();
-	if (root->mlx == 0)
-		return (destroy(root, 1, "error: can't init mlx"));
 	root->mlx_win = mlx_new_window(root->mlx, root->window_width, root->window_height, "cub3d");
 	if (root->mlx_win == 0)
 		return (destroy(root, 2, "error: can't create a new window"));
