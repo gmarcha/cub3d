@@ -41,9 +41,9 @@ void				free_root(t_root *root)
 {
 	int				i;
 
-	i = 0;
-	while (i < 4)
-		if (root->walls_texture[i++])
+	i = -1;
+	while (++i < 4)
+		if (root->walls_texture[i])
 			mlx_destroy_image(root->mlx, root->walls_texture[i]);
 	if (root->sprite_texture)
 		mlx_destroy_image(root->mlx, root->sprite_texture);
