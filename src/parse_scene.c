@@ -72,8 +72,9 @@ void	fill_map(t_root *root, char *buf, int **map)
 		j = 0;
 		while (j < root->size_line + 2)
 		{
-			printf("%d", map[i][j]);
-			if (j < root->size_line + 1)
+			if (map[i][j] == 1)
+				printf("X");
+			else
 				printf(" ");
 			j++;
 		}
@@ -105,7 +106,7 @@ int	**parse_map(t_root* root, char *buf)
 		}
 		else
 		{
-			if (buf[i] != 32 && (buf[i] <= '0' || buf[i] >= '2'))
+			if (buf[i] != 32 && (buf[i] < '0' || buf[i] > '2'))
 			{
 				if (buf[i] == 'N' || buf[i] == 'S'
 				|| buf[i] == 'W' || buf[i] == 'E')
@@ -151,7 +152,7 @@ t_root	*parse_scene(char *buf)
 	root->map = parse_map(root, buf);
 	if (root->map == 0)
 		return (0);
-	if (check_map(root) == 0)
-		return (0);
+	// if (check_map(root) == 0)
+	// 	return (0);
 	return (root);
 }

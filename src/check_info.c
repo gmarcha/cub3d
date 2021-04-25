@@ -4,7 +4,7 @@ t_root	*check_info(t_root *root)
 {
 	int				i;
 
-	if (root->window_width == -1 || root->window_height == -1)
+	if (root->width == -1 || root->height == -1)
 		return (destroy(root, 2, "error: resolution is missing"));
 	i = 0;
 	while (i < 4)

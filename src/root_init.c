@@ -8,8 +8,8 @@ t_root	*root_init(void)
 	root = (t_root *)malloc(sizeof(t_root));
 	if (root == 0)
 		return (destroy(root, 0, "error: can't allocate memory"));
-	root->window_width = -1;
-	root->window_height = -1;
+	root->width = -1;
+	root->height = -1;
 	i = 0;
 	while (i < 4)
 		root->walls_texture[i++] = 0;
