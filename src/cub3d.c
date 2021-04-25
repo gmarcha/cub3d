@@ -60,27 +60,19 @@ void				*destroy(t_root *root, int flag, char *error)
 void				parse_resolution(t_root *root, char **buf)
 {
 	if (root->window_width != -1 || root->window_height != -1)
-		return (destroy(root, 1, "error: too much resolution identifiers in scene file"));
-	if (!**buf)
-		return (destroy(root, 1, "error: no resolution in scene file"));
+		return (destroy(root, 1, "error: multiple defnition of resolution"));
 	while (**buf && is_space(**buf))
 		(*buf)++;
-	if (**buf >= '1' && **buf <= '9')
-	{
-		root->window_width == 0;
-		while (**buf >= '0' && **buf <= '9')
-			root->window_width = root->window_width * 10 + *(*buf)++ - 48;
-	}
+	root->window_width == 0;
+	while (**buf >= '0' && **buf <= '9')
+		root->window_width = root->window_width * 10 + *(*buf)++ - 48;
 	while (**buf && is_space(**buf))
 		(*buf)++;
-	if (**buf >= '1' && **buf <= '9')
-	{
-		root->window_height == 0;
-		while (**buf >= '0' && **buf <= '9')
-			root->window_height = root->window_height * 10 + *(*buf)++ - 48;
-	}
-	if (root->window_width == -1 || root->window_height == -1)
-		return (destroy(root, 1, "error: wrong resolution in scene file"));
+	root->window_height == 0;
+	while (**buf >= '0' && **buf <= '9')
+		root->window_height = root->window_height * 10 + *(*buf)++ - 48;
+	if (root->window_width == 0 || root->window_height == 0)
+		return (destroy(root, 1, "error: wrong resolution"));
 	return (root);
 }
 
