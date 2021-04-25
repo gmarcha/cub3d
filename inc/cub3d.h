@@ -13,9 +13,6 @@
 # include <mlx_int.h>
 # include "libft.h"
 
-# define WINDOW_WIDTH 640
-# define WINDOW_HEIGHT 480
-
 typedef struct s_root
 {
 	void			*mlx;
@@ -23,12 +20,12 @@ typedef struct s_root
 	t_img			*mlx_img;
 	int				window_width;
 	int				window_height;
-	int				**map;
-	int				nb_lines;
 	t_img			*walls_texture[4];
 	t_img			*sprite_texture;
 	int				floor_color;
 	int				ceil_color;
+	int				**map;
+	int				nb_lines;
 }				t_root;
 
 #endif

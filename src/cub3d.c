@@ -17,9 +17,29 @@ void				mlx_draw_pixel(t_img *mlx_img, int x, int y, int color)
 
 void				draw_square(t_img *img, int color)
 {
-	for (int i = 0; i < WINDOW_WIDTH; i++)
-		for (int j = 0; j < WINDOW_HEIGHT; j++)
+	for (int i = 0; i < 640; i++)
+		for (int j = 0; j < 480; j++)
 			mlx_draw_pixel(img, i, j, color);
+}
+
+void				free_root(t_root *root)
+{
+	int				i;
+
+	i = 0;
+	while (i < 4)
+		if (root->walls_texture[i++])
+			free(root->walls_texture[i]);
+	if (root->sprite_texture)
+		free(root->sprite_texture);
+	if (root->map)
+	{
+		i = 0;
+		while (i < root->nb_lines)
+			free(root->map[i++]);
+		free(root->map);
+	}
+	free(root);
 }
 
 void				*destroy(t_root *root, int flag, char *error)
@@ -31,19 +51,75 @@ void				*destroy(t_root *root, int flag, char *error)
 	if (flag > 1)
 		mlx_destroy_display(root->mlx);
 	if (flag > 0)
-		free(root);
+		free_root(root);
 	if (error)
 		ft_putendl_fd(error, 2);
 	return (0);
+}
+
+void				parse_resolution(t_root *root, char **buf)
+{
+	if (root->window_width != -1 || root->window_height != -1)
+		return (destroy(root, 1, "error: too much resolution identifiers in scene file"));
+	if (!**buf)
+		return (destroy(root, 1, "error: no resolution in scene file"));
+	while (**buf && is_space(**buf))
+		(*buf)++;
+	if (**buf >= '1' && **buf <= '9')
+	{
+		root->window_width == 0;
+		while (**buf >= '0' && **buf <= '9')
+			root->window_width = root->window_width * 10 + *(*buf)++ - 48;
+	}
+	while (**buf && is_space(**buf))
+		(*buf)++;
+	if (**buf >= '1' && **buf <= '9')
+	{
+		root->window_height == 0;
+		while (**buf >= '0' && **buf <= '9')
+			root->window_height = root->window_height * 10 + *(*buf)++ - 48;
+	}
+	if (root->window_width == -1 || root->window_height == -1)
+		return (destroy(root, 1, "error: wrong resolution in scene file"));
+	return (root);
+}
+
+void				parse_texture(t_root *root, char **buf, int card)
+{
+
+}
+
+void				parse_color(t_root *root, char **buf, int floor)
+{
+	
+}
+
+t_root				*root_init(void)
+{
+	t_root			*root;
+	int				i;
+
+	root = (t_root *)malloc(sizeof(t_root));
+	if (root == 0)
+		return (destroy(root, 0, "error: can't allocate memory"));
+	root->window_width = -1;
+	root->window_height = -1;
+	i = 0;
+	while (i < 4)
+		root->walls_texture[i++] = 0;
+	root->sprite_texture = 0;
+	root->floor_color = -1;
+	root->ceil_color = -1;
+	root->map = 0;
 }
 
 t_root				*parse_scene(char *buf)
 {
 	t_root			*root;
 
-	root = (t_root *)malloc(sizeof(t_root));
+	root = root_init();
 	if (root == 0)
-		return (destroy(root, 0, "error: can't allocate memory"));
+		return (0);
 	while (*buf && *buf != ' ' && *buf != '1')
 	{
 		if (*buf == '\n')
@@ -51,21 +127,47 @@ t_root				*parse_scene(char *buf)
 		else
 		{
 			if (*buf == 'R')
-				parse_resolution(root, &buf);
-			if (*buf == 'N' && buf[1] == 'O')
-
-			if (*buf == 'S' && buf[1] == 'O')
-
-			if (*buf == 'W' && buf[1] == 'E')
-
-			if (*buf == 'E' && buf[1] == 'A')
-
-			if (*buf == 'S')
-
-			if (*buf == 'F')
-
-			if (*buf == 'C')
-
+			{
+				if (parse_resolution(root, &(++buf)) == 0)
+					return (0);
+			}
+			else if (*buf == 'N' && buf[1] == 'O')
+			{
+				if (parse_texture(root, &(buf += 2), 0) == 0)
+					return (0);
+			}
+			else if (*buf == 'S' && buf[1] == 'O')
+			{
+				if (parse_texture(root, &(buf += 2), 2) == 0)
+					return (0);
+			}
+			else if (*buf == 'W' && buf[1] == 'E')
+			{
+				if (parse_texture(root, &(buf += 2), 1) == 0)
+					return (0);
+			}
+			else if (*buf == 'E' && buf[1] == 'A')
+			{
+				if (parse_texture(root, &(buf += 2), 3) == 0)
+					return (0);
+			}
+			else if (*buf == 'S')
+			{
+				if (parse_texture(root, &(++buf), -1) == 0)
+					return (0);
+			}
+			else if (*buf == 'F')
+			{
+				if (parse_color(root, &(++buf), 1) == 0)
+					return (0);
+			}
+			else if (*buf == 'C')
+			{
+				if (parse_color(root, &(++buf), 0) == 0)
+					return (0);
+			}
+			else
+				return (destroy(root, 1, "error: wrong identifier in scene file"));
 		}
 	}
 	return (root);
@@ -104,10 +206,10 @@ t_root				*init(char *file)
 	root->mlx = mlx_init();
 	if (root->mlx == 0)
 		return (destroy(root, 1, "error: can't init mlx"));
-	root->mlx_win = mlx_new_window(root->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "cub3d");
+	root->mlx_win = mlx_new_window(root->mlx, root->window_width, root->window_height, "cub3d");
 	if (root->mlx_win == 0)
 		return (destroy(root, 2, "error: can't create a new window"));
-	root->mlx_img = mlx_new_image(root->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	root->mlx_img = mlx_new_image(root->mlx, root->window_width, root->window_height);
 	if (root->mlx_img == 0)
 		return (destroy(root, 3, "error: can't create a new image"));
 	return (root);
