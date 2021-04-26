@@ -6,14 +6,14 @@ int	fill_map(t_root *root, int i, int j, char c)
 	{
 		root->pos_x = j;
 		root->pos_y = i;
-		if (c == 'N')
-			root->dir_x = 1;
-		if (c == 'S')
-			root->dir_x = -1;
-		if (c == 'W')
-			root->dir_y = -1;
 		if (c == 'E')
 			root->dir_x = 1;
+		if (c == 'W')
+			root->dir_x = -1;
+		if (c == 'S')
+			root->dir_y = 1;
+		if (c == 'N')
+			root->dir_y = -1;
 	}
 	if (c == '0')
 		root->map[i][j] = 0;
