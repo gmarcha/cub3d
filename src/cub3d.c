@@ -45,7 +45,7 @@ t_ray	*ray_dist(t_root *root, t_ray *ray)
 	return (ray_casting(root, ray));
 }	
 
-t_ray	*ray_init(t_root *root, int i)
+t_ray	*ray_init(t_root *root, int j)
 {
 	t_ray			*ray;
 	double			dir;
@@ -53,7 +53,7 @@ t_ray	*ray_init(t_root *root, int i)
 	ray = (t_ray *)malloc(sizeof(t_ray));
 	if (ray == 0)
 		return (0);
-	dir = i * 2 / (double)(root->width) - 1;
+	dir = j * 2 / (double)(root->width) - 1;
 	ray->pos_x = (int)root->pos_x;
 	ray->pos_y = (int)root->pos_y;
 	ray->dir_x = root->dir_x + root->plane_x * dir;
@@ -69,11 +69,11 @@ t_ray	*ray_init(t_root *root, int i)
 	return (ray_dist(root, ray));
 }
 
-t_ray	*ray_core(t_root *root, int i)
+t_ray	*ray_core(t_root *root, int j)
 {
 	t_ray			*ray;
 
-	ray = ray_init(root, i);
+	ray = ray_init(root, j);
 	if (ray == 0)
 		return (0);
 	if (ray->card % 2)
@@ -85,41 +85,43 @@ t_ray	*ray_core(t_root *root, int i)
 	if (ray->wall_start < 0)
 		ray->wall_start = 0;
 	ray->wall_end = ray->wall_height / 2 + root->height / 2;
+	if (ray->wall_end >= root->height)
+		ray->wall_end = root->height - 1;
 	return (ray);
 }
 
-void	draw(t_root *root, t_ray *ray, int i)
+void	draw(t_root *root, t_ray *ray, int j)
 {
 	int				color[4];
-	int				j;
+	int				i;
 
 	color[0] = 0x00FF0000;
 	color[1] = 0x0000FF00;
 	color[2] = 0x000000FF;
 	color[3] = 0x00FFFF00;
-	j = 0;
-	while (j < ray->wall_start)
-		mlx_draw_pixel(root->mlx_img, j++, i, root->ceil_color);
-	while (j < ray->wall_end)
-		mlx_draw_pixel(root->mlx_img, j++, i, color[ray->card]);
-	while (j < root->height)
-		mlx_draw_pixel(root->mlx_img, j++, i, root->floor_color);
+	i = 0;
+	while (i < ray->wall_start)
+		mlx_draw_pixel(root->mlx_img, j, i++, root->ceil_color);
+	while (i < ray->wall_end)
+		mlx_draw_pixel(root->mlx_img, j, i++, color[ray->card]);
+	while (i < root->height)
+		mlx_draw_pixel(root->mlx_img, j, i++, root->floor_color);
 }
 
 t_root	*draw_core(t_root *root)
 {
 	t_ray			*ray;
-	int				i;
+	int				j;
 
-	i = 0;
-	while (i < root->width)
+	j = 0;
+	while (j < root->width)
 	{
-		ray = ray_core(root, i);
+		ray = ray_core(root, j);
 		if (ray == 0)
 			return (destroy(root, 4, "error: can't draw"));
-		draw(root, ray, i);
+		draw(root, ray, j);
 		free(ray);
-		i++;
+		j++;
 	}
 	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
 	return (root);

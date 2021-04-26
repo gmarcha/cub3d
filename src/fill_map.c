@@ -4,15 +4,15 @@ int	fill_map(t_root *root, int i, int j, char c)
 {
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{
-		root->pos_x = j;
-		root->pos_y = i;
-		if (c == 'E')
-			root->dir_x = 1;
-		if (c == 'W')
-			root->dir_x = -1;
+		root->pos_x = i;
+		root->pos_y = j;
 		if (c == 'S')
-			root->dir_y = 1;
+			root->dir_x = 1;
 		if (c == 'N')
+			root->dir_x = -1;
+		if (c == 'E')
+			root->dir_y = 1;
+		if (c == 'W')
 			root->dir_y = -1;
 	}
 	if (c == '0')
