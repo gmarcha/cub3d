@@ -1,16 +1,22 @@
 #include "cub3d.h"
 
+void	*free_matrix(int **matrix, int size)
+{
+	int				i;
+
+	i = 0;
+	while (i < size)
+		free(matrix[i++]);
+	free(matrix);
+	return (0);
+}
+
 void	free_root(t_root *root)
 {
 	int				i;
 
 	if (root->map)
-	{
-		i = 0;
-		while (i < root->nb_lines)
-			free(root->map[i++]);
-		free(root->map);
-	}
+		free_matrix(root->map, root->nb_lines + 2);
 	i = -1;
 	while (++i < 4)
 		if (root->walls_texture[i])

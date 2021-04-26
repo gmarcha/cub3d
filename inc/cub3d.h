@@ -34,6 +34,7 @@ typedef struct s_root
 
 t_root				*check_info(t_root *root);
 
+void				*free_matrix(int **matrix, int size);
 void				free_root(t_root *root);
 void				*destroy(t_root *root, int flag, char *error);
 
