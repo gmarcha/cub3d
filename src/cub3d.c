@@ -77,9 +77,9 @@ t_ray	*ray_core(t_root *root, int i)
 	if (ray == 0)
 		return (0);
 	if (ray->card % 2)
-		ray->wall_dist = (ray->pos_y - root->pos_y + (1 - ray->ext_y) / 2) / ray->dir_y;
-	else
 		ray->wall_dist = (ray->pos_x - root->pos_x + (1 - ray->ext_x) / 2) / ray->dir_x;
+	else
+		ray->wall_dist = (ray->pos_y - root->pos_y + (1 - ray->ext_y) / 2) / ray->dir_y;
 	ray->wall_height = (int)(root->height / ray->wall_dist);
 	ray->wall_start = -ray->wall_height / 2 + root->height / 2;
 	if (ray->wall_start < 0)
@@ -106,7 +106,6 @@ void	draw(t_root *root, t_ray *ray, int i)
 		mlx_draw_pixel(root->mlx_img, i, j++, color[ray->card]);
 	while (j < root->height)
 		mlx_draw_pixel(root->mlx_img, i, j++, root->floor_color);
-	printf("%d\t%d\n", i, j);
 }
 
 t_root	*draw_core(t_root *root)
