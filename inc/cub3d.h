@@ -61,8 +61,8 @@ typedef struct s_ray
 	double			wall_coord;
 	int				text_x;
 	int				text_y;
-	double			text_step;
 	double			text_pos;
+	double			text_step;
 }				t_ray;
 
 t_root				*check_info(t_root *root);
