@@ -138,31 +138,17 @@ int	key_hook(int keycode, t_root *root)
 	if (keycode == 119)
 	{
 		if (root->map[(int)(root->pos_y + root->dir_y)][(int)root->pos_x] == 0)
-			root->pos_y += root->dir_y;
+			root->pos_x += 0.5;
 		if (root->map[(int)root->pos_y][(int)(root->pos_x + root->dir_x)] == 0)
-			root->pos_x += root->dir_x;
+			root->pos_y += 0.5;
 	}
 	if (keycode == 115)
 	{
 		if (root->map[(int)(root->pos_y - root->dir_y)][(int)root->pos_x] == 0)
-			root->pos_y -= root->dir_y;
+			root->pos_x -= 0.5;
 		if (root->map[(int)root->pos_y][(int)(root->pos_x - root->dir_x)] == 0)
-			root->pos_x -= root->dir_x;
+			root->pos_y -= 0.5;
 	}
-	// if (keycode == 119)
-	// {
-	// 	if (root->map[(int)(root->pos_y + root->dir_y)][(int)root->pos_x] == 0)
-	// 		root->pos_x += root->dir_x;
-	// 	if (root->map[(int)root->pos_y][(int)(root->pos_x + root->dir_x)] == 0)
-	// 		root->pos_y += root->dir_y;
-	// }
-	// if (keycode == 115)
-	// {
-	// 	if (root->map[(int)(root->pos_y - root->dir_y)][(int)root->pos_x] == 0)
-	// 		root->pos_x -= root->dir_x;
-	// 	if (root->map[(int)root->pos_y][(int)(root->pos_x - root->dir_x)] == 0)
-	// 		root->pos_y -= root->dir_y;
-	// }
 	// if (keycode == 97) {};
 	// if (keycode == 100) {};
 	if (keycode == 65361)
