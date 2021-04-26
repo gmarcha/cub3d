@@ -99,11 +99,11 @@ void	draw(t_root *root, t_ray *ray, int i)
 	color[3] = 0x00FFFF00;
 	j = 0;
 	while (j < ray->wall_start)
-		mlx_draw_pixel(root->mlx_img, i, j++, root->ceil_color);
+		mlx_draw_pixel(root->mlx_img, j++, i, root->ceil_color);
 	while (j < ray->wall_end)
-		mlx_draw_pixel(root->mlx_img, i, j++, color[ray->card]);
+		mlx_draw_pixel(root->mlx_img, j++, i, color[ray->card]);
 	while (j < root->height)
-		mlx_draw_pixel(root->mlx_img, i, j++, root->floor_color);
+		mlx_draw_pixel(root->mlx_img, j++, i, root->floor_color);
 }
 
 t_root	*draw_core(t_root *root)
