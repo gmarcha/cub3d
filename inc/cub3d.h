@@ -30,7 +30,35 @@ typedef struct s_root
 	int				**map;
 	int				nb_lines;
 	int				size_line;
+	double			pos_x;
+	double			pos_y;
+	double			dir_x;
+	double			dir_y;
 }				t_root;
+
+typedef struct s_ray
+{
+	int				pos_x;
+	int				pos_y;
+	double			dir_x;
+	double			dir_y;
+	int				ext_x;
+	int				ext_y;
+	double			dist_from_x;
+	double			dist_from_y;
+	double			dist_to_x;
+	double			dist_to_y;
+	int				card;
+	double			wall_dist;
+	int				wall_height;
+	int				wall_start;
+	int				wall_end;
+	double			wall_coord;
+	int				text_x;
+	int				text_y;
+	double			text_step;
+	double			text_pos;
+}				t_ray;
 
 t_root				*check_info(t_root *root);
 
@@ -40,7 +68,7 @@ void				*free_matrix(int **matrix, int size);
 void				free_root(t_root *root);
 void				*destroy(t_root *root, int flag, char *error);
 
-int					fill_map(char c, int *n);
+int					fill_map(t_root *root, int i, int j, char c);
 
 int					**init_map(t_root* root, char *buf);
 

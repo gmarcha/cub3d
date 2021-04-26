@@ -1,5 +1,130 @@
 #include "cub3d.h"
 
+void	ray_casting(t_ray *ray, int **map)
+{
+	int				hit;
+
+	hit = 0;
+	while (!hit)
+	{
+		if (ray->dist_to_next_x < ray->dist_to_next_y)
+		{
+			ray->dist_to_next_x += ray->dist_from_x_to_x;
+			ray->pos_x += ray->ext_x;
+			ray->card = 0;
+			if (ray->ext_x == -1)
+				ray->card = 2;
+		}
+		else
+		{
+			ray->dist_to_next_y += ray->dist_from_y_to_y;
+			ray->pos_y += ray->ext_y;
+			ray->card = 1;
+			if (ray->ext_y == 1)
+				ray->card = 3;
+		}
+		if (map[ray->pos_x][ray->pos_y] == 1)
+			hit = 1;
+	}
+}
+
+t_ray	*ray_dist(t_root *root, t_ray *ray)
+{
+	ray->dist_from_x = 1 / ray->dir_x;
+	if (ray->dist_from_x < 0)
+		ray->dist_from_x *= -1;
+	ray->dist_from_y = 1 / ray->dir_y;
+	if (ray->dist_from_y < 0)
+		ray->dist_from_y *= -1;
+	if (ray->dir_x < 0)
+		ray->dist_to_x = (root->pos_x - ray->pos_x) * ray->dist_from_x;
+	else
+		ray->dist_to_x = (ray->pos_x + 1 - root->pos_x) * ray->dist_from_x;
+	if (ray->dir_y < 0)
+		ray->dist_to_y = (root->pos_y - ray->pos_y) * ray->dist_from_y;
+	else
+		ray->dist_to_y = (ray->pos_y + 1 - root->pos_y) * ray->dist_from_y;
+	return (ray);
+}	
+
+t_ray	*ray_init(t_root *root, int i)
+{
+	t_ray			*ray;
+
+	ray = (t_ray *)malloc(sizeof(t_ray));
+	if (ray == 0)
+		return (0);
+	ray->pos_x = (int)root->pos_x;
+	ray->pos_y = (int)root->pos_y;
+	ray->dir_x = root->dir_x;
+	ray->dir_y = root->dir_y + i * 2 / (double)(root->width) - 1;
+	if (ray->dir_x < 0)
+		ray->ext_x = -1;
+	else
+		ray->ext_x = 1;
+	if (ray->dir_y < 0)
+		ray->ext_y = -1;
+	else
+		ray->ext_y = 1;
+	return (ray_dist(root, ray));
+}
+
+t_ray	*ray_core(t_root *root, int i)
+{
+	t_ray			*ray;
+
+	ray = ray_init(root, i);
+	if (ray == 0)
+		return (0);
+	ray_casting(ray, root->map);
+	if (ray->card % 2)
+		ray->wall_dist = (ray->pos_y - root->pos_y + (1 - ray->ext_y) / 2) / ray->dir_y;
+	else
+		ray->wall_dist = (ray->pos_x - root->pos_x + (1 - ray->ext_x) / 2) / ray->dir_x;
+	ray->wall_height = (int)(root->height / ray->wall_dist);
+	ray->wall_start = -ray->wall_height / 2 + root->height / 2;
+	if (ray->wall_start < 0)
+		ray->wall_start = 0;
+	ray->wall_end = ray->wall_height / 2 + root->height / 2;
+	return (ray);
+}
+
+void	draw(t_root *root, t_ray *ray, int i)
+{
+	int				color[4];
+	int				j;
+
+	color[0] = 0x00FF0000;
+	color[1] = 0x0000FF00;
+	color[2] = 0x000000FF;
+	color[3] = 0x00FFFF00;
+	j = 0;
+	while (j < ray->wall_start)
+		mlx_draw_pixel(root->mlx_img, i, j++, root->ceil_color);
+	while (j < ray->wall_end)
+		mlx_draw_pixel(root->mlx_img, i, j++, color[ray->card]);
+	while (j < root->height)
+		mlx_draw_pixel(root->mlx_img, i, j++, root->floor_color);
+}
+
+t_root	*draw_core(t_root *root)
+{
+	t_ray			*ray;
+	int				i;
+
+	i = 0;
+	while (i < root->width)
+	{
+		ray = ray_core(root);
+		if (ray == 0)
+			return (destroy(root, 4, "error: can't draw"));
+		draw(root, ray, i);
+		free(ray);
+		i++;
+	}
+	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
+}
+
 int	key_hook(int keycode, t_root *root)
 {
 	printf("Print keycode: %d\n", keycode);
@@ -8,16 +133,11 @@ int	key_hook(int keycode, t_root *root)
 		destroy(root, 4, 0);
 		exit(0);
 	}
-	draw_square(root->mlx_img, 0x00000000);
-	if (keycode == 65361)
-		draw_square(root->mlx_img, 0x00FF0000);
-	if (keycode == 65362)
-		draw_square(root->mlx_img, 0x0000FF00);
-	if (keycode == 65363)
-		draw_square(root->mlx_img, 0x000000FF);
-	if (keycode == 65364)
-		draw_square(root->mlx_img, 0x00FFFFFF);
-	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
+	if (draw_core(root) == 0)
+	{
+		destroy(root, 4, 0);
+		exit(0);
+	}
 	return (1);
 }
 
@@ -34,6 +154,11 @@ int	main(int argc, char *argv[])
 	if (root == 0)
 		return (1);
 	print_map(root->map, root->nb_lines + 1, root->size_line + 1);
+	if (draw_core(root) == 0)
+	{
+		destroy(root, 4, 0);
+		exit(0);
+	}
 	mlx_hook(root->mlx_win, 2, (1L << 0), &key_hook, root);
 	mlx_loop(root->mlx);
 	return (0);
