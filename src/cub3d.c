@@ -154,20 +154,20 @@ int	key_hook(int keycode, t_root *root)
 	if (keycode == 65361)
 	{
 		tmp = root->dir_x;
-		root->dir_x = tmp * cos(-ROTATION_SPEED) - root->dir_y * sin(-ROTATION_SPEED);
-		root->dir_y = tmp * sin(-ROTATION_SPEED) + root->dir_y * cos(-ROTATION_SPEED);
+		root->dir_x = tmp * sin(-ROTATION_SPEED) - root->dir_y * cos(-ROTATION_SPEED);
+		root->dir_y = tmp * cos(-ROTATION_SPEED) + root->dir_y * sin(-ROTATION_SPEED);
 		tmp = root->plane_x;
-		root->plane_x = tmp * cos(-ROTATION_SPEED) - root->plane_y * sin(-ROTATION_SPEED);
-		root->plane_y = tmp * sin(-ROTATION_SPEED) + root->plane_y * cos(-ROTATION_SPEED);
+		root->plane_x = tmp * sin(-ROTATION_SPEED) - root->plane_y * cos(-ROTATION_SPEED);
+		root->plane_y = tmp * cos(-ROTATION_SPEED) + root->plane_y * sin(-ROTATION_SPEED);
 	}
 	if (keycode == 65363)
 	{
 		tmp = root->dir_x;
-		root->dir_x = tmp * cos(ROTATION_SPEED) - root->dir_y * sin(ROTATION_SPEED);
-		root->dir_y = tmp * sin(ROTATION_SPEED) + root->dir_y * cos(ROTATION_SPEED);
+		root->dir_x = tmp * sin(ROTATION_SPEED) - root->dir_y * cos(ROTATION_SPEED);
+		root->dir_y = tmp * cos(ROTATION_SPEED) + root->dir_y * sin(ROTATION_SPEED);
 		tmp = root->plane_x;
-		root->plane_x = tmp * cos(ROTATION_SPEED) - root->plane_y * sin(ROTATION_SPEED);
-		root->plane_y = tmp * sin(ROTATION_SPEED) + root->plane_y * cos(ROTATION_SPEED);
+		root->plane_x = tmp * sin(ROTATION_SPEED) - root->plane_y * cos(ROTATION_SPEED);
+		root->plane_y = tmp * cos(ROTATION_SPEED) + root->plane_y * sin(ROTATION_SPEED);
 	}
 	if (draw_core(root) == 0)
 	{
