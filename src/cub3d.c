@@ -106,12 +106,9 @@ t_ray	*ray_core(t_root *root, int i)
 void	draw(t_root *root, t_ray *ray, int i)
 {
 	int				color[4];
+	char			*target;
 	int				j;
 
-	color[0] = 0x0000FF00;
-	color[1] = 0x00FF0000;
-	color[2] = 0x00FFFF00;
-	color[3] = 0x000000FF;
 	j = 0;
 	while (j < ray->wall_start)
 	{
@@ -123,7 +120,12 @@ void	draw(t_root *root, t_ray *ray, int i)
 	{
 		ray->text_y = (int)ray->text_pos & (root->walls_texture[ray->card]->height - 1);
 		ray->text_pos += ray->text_step;
-		mlx_draw_pixel(root->mlx_img, i, j, root->walls_texture[ray->card]->data + root->walls_texture[ray->card]->height * ray->text_y + ray->text_x);
+		target = root->walls_texture[ray->card]->data + ((root->walls_texture[ray->card]->height * root->walls_texture[ray->card]->bpp / 8) * ray->text_y + ray->text_x);
+		color[0] = *target++;
+		color[1] = *target++;
+		color[2] = *target++;
+		color[3] = *target++;
+		mlx_draw_pixel(root->mlx_img, i, j, mlx_rgb_to_int(color[0], color[1], color[2], color[3]));
 		j++;
 	}
 }
