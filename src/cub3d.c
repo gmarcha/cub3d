@@ -123,7 +123,7 @@ void	draw(t_root *root, t_ray *ray, int i)
 	{
 		ray->text_y = (int)ray->text_pos & (root->walls_texture[ray->card]->height - 1);
 		ray->text_pos += ray->text_step;
-		mlx_draw_pixel(root->mlx_img, i, j, color[ray->card]);
+		mlx_draw_pixel(root->mlx_img, i, j, root->walls_texture[ray->card]->data + root->walls_texture[ray->card]->height * ray->text_y + ray->text_x);
 		j++;
 	}
 }
