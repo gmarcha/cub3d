@@ -5,20 +5,26 @@ INC			=	-I ./inc
 LIB			=	-L ./libft -lft -lmlx -lXext -lX11 -lm -lbsd
 OBJ			=	$(patsubst src%, obj%, $(SRC:.c=.o))
 SRC			=	src/check_info.c \
+				src/check_map.c \
 				src/cub3d.c \
 				src/destroy.c \
+				src/fill_map.c \
+				src/init_map.c \
 				src/init_scene.c \
 				src/init.c \
 				src/mlx_utils.c \
 				src/parse_color.c \
 				src/parse_info.c \
+				src/parse_map.c \
 				src/parse_resolution.c \
 				src/parse_scene.c \
 				src/parse_texture.c \
 				src/parse_value.c \
 				src/parse_wall.c \
 				src/root_init.c \
-				src/utils.c
+				src/size_map.c \
+				src/utils.c \
+				src/valid_map.c
 
 all:		$(NAME)
 

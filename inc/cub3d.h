@@ -34,9 +34,15 @@ typedef struct s_root
 
 t_root				*check_info(t_root *root);
 
+t_root				*check_map(t_root *root, char c, int *max, int *player);
+
 void				*free_matrix(int **matrix, int size);
 void				free_root(t_root *root);
 void				*destroy(t_root *root, int flag, char *error);
+
+int					fill_map(char c, int *n);
+
+int					**init_map(t_root* root, char *buf);
 
 t_root				*init_scene(char *file);
 
@@ -49,6 +55,8 @@ t_root				*parse_color(t_root *root, char **buf, int *floor);
 
 t_root				*parse_info(t_root *root, char **buf);
 
+t_root				*parse_map(t_root *root, char *buf);
+
 t_root				*parse_resolution(t_root *root, char **buf);
 
 t_root				*parse_scene(char *buf);
@@ -60,6 +68,10 @@ t_root				*parse_value(t_root *root, char **buf);
 t_root				*parse_wall(t_root *root, char **buf);
 
 t_root				*root_init(void);
+
+t_root				*size_map(t_root *root, char *buf);
+
+t_root				*valid_map(t_root *root, int **map);
 
 int					ft_strclen(char *s, int c);
 int					is_space(int c);
