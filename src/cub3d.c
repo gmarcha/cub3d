@@ -21,7 +21,7 @@ t_ray	*ray_casting(t_root *root, t_ray *ray)
 			if (ray->ext_y == 1)
 				ray->card = 3;
 		}
-		if (root->map[ray->pos_x][ray->pos_y] == 1)
+		if (root->map[ray->pos_y][ray->pos_x] == 1)
 			return (ray);
 	}
 	return (0);
