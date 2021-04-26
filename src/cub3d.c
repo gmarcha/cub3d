@@ -67,6 +67,12 @@ t_ray	*ray_init(t_root *root, int i)
 	return (ray_dist(root, ray));
 }
 
+t_ray	*ray_texture(t_root *root, t_ray *ray)
+{
+	(void)root;
+	return (ray);
+}
+
 t_ray	*ray_core(t_root *root, int i)
 {
 	t_ray			*ray;
@@ -85,7 +91,7 @@ t_ray	*ray_core(t_root *root, int i)
 	ray->wall_end = ray->wall_height / 2 + root->height / 2;
 	if (ray->wall_end >= root->height)
 		ray->wall_end = root->height - 1;
-	return (ray);
+	return (ray_texture(root, ray));
 }
 
 void	draw(t_root *root, t_ray *ray, int i)
