@@ -149,8 +149,8 @@ int	key_hook(int keycode, t_root *root)
 		if (root->map[(int)(root->pos_y - root->dir_y) * MOVE_SPEED][(int)root->pos_x])
 			root->pos_y -= root->dir_y * MOVE_SPEED;
 	}
-	if (keycode == 97);
-	if (keycode == 100);
+	if (keycode == 97) {};
+	if (keycode == 100) {};
 	if (keycode == 65361)
 	{
 		tmp = root->dir_x;
