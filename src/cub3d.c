@@ -151,17 +151,17 @@ int	key_hook(int keycode, t_root *root)
 	// }
 	if (keycode == 119)
 	{
-		if (root->map[(int)(root->pos_y + root->dir_y) * MOVE_SPEED][(int)root->pos_x] == 0)
-			root->pos_x += root->dir_x * MOVE_SPEED;
-		if (root->map[(int)root->pos_y][(int)(root->pos_x + root->dir_x) * MOVE_SPEED] == 0)
-			root->pos_y += root->dir_y * MOVE_SPEED;
+		if (root->map[(int)(root->pos_y + root->dir_y)][(int)root->pos_x] == 0)
+			root->pos_x += root->dir_x;
+		if (root->map[(int)root->pos_y][(int)(root->pos_x + root->dir_x)] == 0)
+			root->pos_y += root->dir_y;
 	}
 	if (keycode == 115)
 	{
-		if (root->map[(int)(root->pos_y - root->dir_y) * MOVE_SPEED][(int)root->pos_x] == 0)
-			root->pos_x -= root->dir_x * MOVE_SPEED;
-		if (root->map[(int)root->pos_y][(int)(root->pos_x - root->dir_x) * MOVE_SPEED] == 0)
-			root->pos_y -= root->dir_y * MOVE_SPEED;
+		if (root->map[(int)(root->pos_y - root->dir_y)][(int)root->pos_x] == 0)
+			root->pos_x -= root->dir_x;
+		if (root->map[(int)root->pos_y][(int)(root->pos_x - root->dir_x)] == 0)
+			root->pos_y -= root->dir_y;
 	}
 	if (keycode == 97) {};
 	if (keycode == 100) {};
