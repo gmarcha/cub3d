@@ -4,7 +4,6 @@ t_ray	*ray_casting(t_root *root, t_ray *ray)
 {
 	while (1)
 	{
-		printf("%d\t%d\n", ray->pos_x, ray->pos_y);
 		if (ray->dist_to_x < ray->dist_to_y)
 		{
 			ray->dist_to_x += ray->dist_from_x;
