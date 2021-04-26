@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-t_root	*valid_map(t_root *root)
+t_root	*valid_map(t_root *root, int **map)
 {
 	int				i;
 	int				j;
@@ -63,7 +63,7 @@ t_root	*parse_map(t_root *root, char *buf)
 	j = 0;
 	while (j < root->size_line + 2)
 		root->map[i][j++] = -1;
-	return (valid_map(root));
+	return (valid_map(root, root->map));
 }
 
 t_root	*check_map(t_root *root, char c, int *max, int *player)
@@ -102,7 +102,7 @@ t_root	*size_map(t_root *root, char *buf)
 			root->nb_lines++;
 		}
 		else
-			if (check_map(root, buf[i], &player) == 0)
+			if (check_map(root, buf[i], &max, &player) == 0)
 				return (0);
 	}
 	if (root->size_line < max)
@@ -146,7 +146,7 @@ t_root	*parse_scene(char *buf)
 	root->map = init_map(root, buf);
 	if (root->map == 0)
 		return (0);
-	if (parse_map(root, buf, root->map) == 0)
+	if (parse_map(root, buf) == 0)
 	 	return (0);
 	return (root);
 }

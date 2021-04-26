@@ -64,6 +64,7 @@ t_root				*root_init(void);
 int					ft_strclen(char *s, int c);
 int					is_space(int c);
 int					**allocate_map(int nb_lines, int size_line);
+void				print_map(int **map, int nb_lines, int size_line);
 void				draw_square(t_img *img, int color);
 
 #endif
