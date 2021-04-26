@@ -95,10 +95,10 @@ void	draw(t_root *root, t_ray *ray, int i)
 	int				color[4];
 	int				j;
 
-	color[0] = 0x00FF0000;
-	color[1] = 0x0000FF00;
-	color[2] = 0x000000FF;
-	color[3] = 0x00FFFF00;
+	color[0] = 0x0000FF00;
+	color[1] = 0x00FF0000;
+	color[2] = 0x00FFFF00;
+	color[3] = 0x000000FF;
 	j = 0;
 	while (j < ray->wall_start)
 		mlx_draw_pixel(root->mlx_img, i, j++, root->ceil_color);
@@ -139,16 +139,16 @@ int	key_hook(int keycode, t_root *root)
 	}
 	if (keycode == 119)
 	{
-		if (root->map[(int)(root->pos_x + root->dir_x) * MOVE_SPEED][(int)root->pos_y] == 0)
+		if (root->map[(int)(root->pos_x + root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
 			root->pos_x += root->dir_x * MOVE_SPEED;
-		if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y) * MOVE_SPEED] == 0)
+		if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y) * MOVE_SPEED] != 1)
 			root->pos_y += root->dir_y * MOVE_SPEED;
 	}
 	if (keycode == 115)
 	{
-		if (root->map[(int)(root->pos_x - root->dir_x) * MOVE_SPEED][(int)root->pos_y] == 0)
+		if (root->map[(int)(root->pos_x - root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
 			root->pos_x -= root->dir_x * MOVE_SPEED;
-		if (root->map[(int)root->pos_x][(int)(root->pos_y - root->dir_y) * MOVE_SPEED] == 0)
+		if (root->map[(int)root->pos_x][(int)(root->pos_y - root->dir_y) * MOVE_SPEED] != 1)
 			root->pos_y -= root->dir_y * MOVE_SPEED;
 	}
 	// if (keycode == 97) {};
@@ -156,20 +156,20 @@ int	key_hook(int keycode, t_root *root)
 	if (keycode == 65361)
 	{
 		tmp = root->dir_x;
-		root->dir_x = tmp * cos(-ROTATION_SPEED) - root->dir_y * sin(-ROTATION_SPEED);
-		root->dir_y = tmp * sin(-ROTATION_SPEED) + root->dir_y * cos(-ROTATION_SPEED);
-		tmp = root->plane_x;
-		root->plane_x = tmp * cos(-ROTATION_SPEED) - root->plane_y * sin(-ROTATION_SPEED);
-		root->plane_y = tmp * sin(-ROTATION_SPEED) + root->plane_y * cos(-ROTATION_SPEED);
-	}
-	if (keycode == 65363)
-	{
-		tmp = root->dir_x;
 		root->dir_x = tmp * cos(ROTATION_SPEED) - root->dir_y * sin(ROTATION_SPEED);
 		root->dir_y = tmp * sin(ROTATION_SPEED) + root->dir_y * cos(ROTATION_SPEED);
 		tmp = root->plane_x;
 		root->plane_x = tmp * cos(ROTATION_SPEED) - root->plane_y * sin(ROTATION_SPEED);
 		root->plane_y = tmp * sin(ROTATION_SPEED) + root->plane_y * cos(ROTATION_SPEED);
+	}
+	if (keycode == 65363)
+	{
+		tmp = root->dir_x;
+		root->dir_x = tmp * cos(-ROTATION_SPEED) - root->dir_y * sin(-ROTATION_SPEED);
+		root->dir_y = tmp * sin(-ROTATION_SPEED) + root->dir_y * cos(-ROTATION_SPEED);
+		tmp = root->plane_x;
+		root->plane_x = tmp * cos(-ROTATION_SPEED) - root->plane_y * sin(-ROTATION_SPEED);
+		root->plane_y = tmp * sin(-ROTATION_SPEED) + root->plane_y * cos(-ROTATION_SPEED);
 	}
 	if (draw_core(root) == 0)
 	{
