@@ -11,6 +11,8 @@ t_root	*parse_map(t_root *root, char *buf)
 	i = 0;
 	root->dir_x = 0;
 	root->dir_y = 0;
+	root->plane_x = 0;
+	root->plane_y = 0.8;
 	while (j < root->size_line + 2)
 		root->map[i][j++] = -1;
 	while (++i < root->nb_lines + 1)

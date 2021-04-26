@@ -37,6 +37,8 @@ typedef struct s_root
 	double			pos_y;
 	double			dir_x;
 	double			dir_y;
+	double			plane_x;
+	double			plane_y;
 }				t_root;
 
 typedef struct s_ray

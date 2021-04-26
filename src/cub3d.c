@@ -48,14 +48,16 @@ t_ray	*ray_dist(t_root *root, t_ray *ray)
 t_ray	*ray_init(t_root *root, int i)
 {
 	t_ray			*ray;
+	double			dir;
 
 	ray = (t_ray *)malloc(sizeof(t_ray));
 	if (ray == 0)
 		return (0);
+	dir = i * 2 / (double)(root->width) - 1;
 	ray->pos_x = (int)root->pos_x;
 	ray->pos_y = (int)root->pos_y;
-	ray->dir_x = root->dir_x;
-	ray->dir_y = root->dir_y + i * 2 / (double)(root->width) - 1;
+	ray->dir_x = root->dir_x + root->plane_x * dir;
+	ray->dir_y = root->dir_y + root->plane_y * dir;
 	if (ray->dir_x < 0)
 		ray->ext_x = -1;
 	else
@@ -151,9 +153,22 @@ int	key_hook(int keycode, t_root *root)
 	if (keycode == 100);
 	if (keycode == 65361)
 	{
-
+		tmp = root->dir_x;
+		root->dir_x = tmp * cos(-ROTATION_SPEED) - root->dir_y * sin(-ROTATION_SPEED);
+		root->dir_y = tmp * sin(-ROTATION_SPEED) + root->dir_y * cos(-ROTATION_SPEED);
+		tmp = root->plane_x;
+		root->plane_x = tmp * cos(-ROTATION_SPEED) - root->plane_y * sin(-ROTATION_SPEED);
+		root->plane_y = tmp * sin(-ROTATION_SPEED) + root->plane_y * cos(-ROTATION_SPEED);
 	}
 	if (keycode == 65363)
+	{
+		tmp = root->dir_x;
+		root->dir_x = tmp * cos(ROTATION_SPEED) - root->dir_y * sin(ROTATION_SPEED);
+		root->dir_y = tmp * sin(ROTATION_SPEED) + root->dir_y * cos(ROTATION_SPEED);
+		tmp = root->plane_x;
+		root->plane_x = tmp * cos(ROTATION_SPEED) - root->plane_y * sin(ROTATION_SPEED);
+		root->plane_y = tmp * sin(ROTATION_SPEED) + root->plane_y * cos(ROTATION_SPEED);
+	}
 	if (draw_core(root) == 0)
 	{
 		destroy(root, 4, 0);
