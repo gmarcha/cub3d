@@ -137,17 +137,17 @@ int	key_hook(int keycode, t_root *root)
 	}
 	if (keycode == 119)
 	{
-		if (root->map[(int)(root->pos_x + root->dir_x)][(int)root->pos_y] == 0)
-			root->pos_x += root->dir_x;
-		if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y)] == 0)
+		if (root->map[(int)(root->pos_y + root->dir_y)][(int)root->pos_x] == 0)
 			root->pos_y += root->dir_y;
+		if (root->map[(int)root->pos_y][(int)(root->pos_x + root->dir_x)] == 0)
+			root->pos_x += root->dir_x;
 	}
 	if (keycode == 115)
 	{
-		if (root->map[(int)(root->pos_x - root->dir_x)][(int)root->pos_y] == 0)
-			root->pos_x -= root->dir_x;
-		if (root->map[(int)root->pos_x][(int)(root->pos_y - root->dir_y)] == 0)
+		if (root->map[(int)(root->pos_y - root->dir_y)][(int)root->pos_x] == 0)
 			root->pos_y -= root->dir_y;
+		if (root->map[(int)root->pos_y][(int)(root->pos_x - root->dir_x)] == 0)
+			root->pos_x -= root->dir_x;
 	}
 	// if (keycode == 119)
 	// {
