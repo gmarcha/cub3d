@@ -8,19 +8,19 @@ t_ray	*ray_casting(t_root *root, t_ray *ray)
 		{
 			ray->dist_to_x += ray->dist_from_x;
 			ray->pos_x += ray->ext_x;
-			ray->card = 0;
-			if (ray->ext_x == -1)
-				ray->card = 2;
+			ray->card = 1;
+			if (ray->ext_x == 1)
+				ray->card = 3;
 		}
 		else
 		{
 			ray->dist_to_y += ray->dist_from_y;
 			ray->pos_y += ray->ext_y;
-			ray->card = 1;
+			ray->card = 0;
 			if (ray->ext_y == 1)
-				ray->card = 3;
+				ray->card = 2;
 		}
-		if (root->map[ray->pos_y][ray->pos_x] == 1)
+		if (root->map[ray->pos_x][ray->pos_y] == 1)
 			return (ray);
 	}
 	return (0);
@@ -45,7 +45,7 @@ t_ray	*ray_dist(t_root *root, t_ray *ray)
 	return (ray_casting(root, ray));
 }	
 
-t_ray	*ray_init(t_root *root, int j)
+t_ray	*ray_init(t_root *root, int i)
 {
 	t_ray			*ray;
 	double			dir;
@@ -53,7 +53,7 @@ t_ray	*ray_init(t_root *root, int j)
 	ray = (t_ray *)malloc(sizeof(t_ray));
 	if (ray == 0)
 		return (0);
-	dir = j * 2 / (double)(root->width) - 1;
+	dir = i * 2 / (double)(root->width) - 1;
 	ray->pos_x = (int)root->pos_x;
 	ray->pos_y = (int)root->pos_y;
 	ray->dir_x = root->dir_x + root->plane_x * dir;
@@ -69,11 +69,11 @@ t_ray	*ray_init(t_root *root, int j)
 	return (ray_dist(root, ray));
 }
 
-t_ray	*ray_core(t_root *root, int j)
+t_ray	*ray_core(t_root *root, int i)
 {
 	t_ray			*ray;
 
-	ray = ray_init(root, j);
+	ray = ray_init(root, i);
 	if (ray == 0)
 		return (0);
 	if (ray->card % 2)
@@ -90,38 +90,38 @@ t_ray	*ray_core(t_root *root, int j)
 	return (ray);
 }
 
-void	draw(t_root *root, t_ray *ray, int j)
+void	draw(t_root *root, t_ray *ray, int i)
 {
 	int				color[4];
-	int				i;
+	int				j;
 
 	color[0] = 0x00FF0000;
 	color[1] = 0x0000FF00;
 	color[2] = 0x000000FF;
 	color[3] = 0x00FFFF00;
-	i = 0;
-	while (i < ray->wall_start)
-		mlx_draw_pixel(root->mlx_img, j, i++, root->ceil_color);
-	while (i < ray->wall_end)
-		mlx_draw_pixel(root->mlx_img, j, i++, color[ray->card]);
-	while (i < root->height)
-		mlx_draw_pixel(root->mlx_img, j, i++, root->floor_color);
+	j = 0;
+	while (j < ray->wall_start)
+		mlx_draw_pixel(root->mlx_img, i, j++, root->ceil_color);
+	while (j < ray->wall_end)
+		mlx_draw_pixel(root->mlx_img, i, j++, color[ray->card]);
+	while (j < root->height)
+		mlx_draw_pixel(root->mlx_img, i, j++, root->floor_color);
 }
 
 t_root	*draw_core(t_root *root)
 {
 	t_ray			*ray;
-	int				j;
+	int				i;
 
-	j = 0;
-	while (j < root->width)
+	i = 0;
+	while (i < root->width)
 	{
-		ray = ray_core(root, j);
+		ray = ray_core(root, i);
 		if (ray == 0)
 			return (destroy(root, 4, "error: can't draw"));
-		draw(root, ray, j);
+		draw(root, ray, i);
 		free(ray);
-		j++;
+		i++;
 	}
 	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
 	return (root);
@@ -139,16 +139,16 @@ int	key_hook(int keycode, t_root *root)
 	}
 	if (keycode == 119)
 	{
-		if (root->map[(int)(root->pos_y + root->dir_y)][(int)root->pos_x] == 0)
+		if (root->map[(int)(root->pos_x + root->dir_x)][(int)root->pos_y] == 0)
 			root->pos_x += root->dir_x;
-		if (root->map[(int)root->pos_y][(int)(root->pos_x + root->dir_x)] == 0)
+		if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y)] == 0)
 			root->pos_y += root->dir_y;
 	}
 	if (keycode == 115)
 	{
-		if (root->map[(int)(root->pos_y - root->dir_y)][(int)root->pos_x] == 0)
+		if (root->map[(int)(root->pos_x - root->dir_x)][(int)root->pos_y] == 0)
 			root->pos_x -= root->dir_x;
-		if (root->map[(int)root->pos_y][(int)(root->pos_x - root->dir_x)] == 0)
+		if (root->map[(int)root->pos_x][(int)(root->pos_y - root->dir_y)] == 0)
 			root->pos_y -= root->dir_y;
 	}
 	// if (keycode == 97) {};
