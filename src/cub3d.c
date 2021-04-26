@@ -1,15 +1,13 @@
 #include "cub3d.h"
 
-void	ray_casting(t_ray *ray, int **map)
+t_ray	*ray_casting(t_root *root, t_ray *ray)
 {
-	int				hit;
-
-	hit = 0;
-	while (!hit)
+	while (1)
 	{
-		if (ray->dist_to_next_x < ray->dist_to_next_y)
+		printf("%d\t%d\n", ray->pos_x, ray->pos_y);
+		if (ray->dist_to_x < ray->dist_to_y)
 		{
-			ray->dist_to_next_x += ray->dist_from_x_to_x;
+			ray->dist_to_x += ray->dist_from_x;
 			ray->pos_x += ray->ext_x;
 			ray->card = 0;
 			if (ray->ext_x == -1)
@@ -17,15 +15,16 @@ void	ray_casting(t_ray *ray, int **map)
 		}
 		else
 		{
-			ray->dist_to_next_y += ray->dist_from_y_to_y;
+			ray->dist_to_y += ray->dist_from_y;
 			ray->pos_y += ray->ext_y;
 			ray->card = 1;
 			if (ray->ext_y == 1)
 				ray->card = 3;
 		}
-		if (map[ray->pos_x][ray->pos_y] == 1)
-			hit = 1;
+		if (root->map[ray->pos_x][ray->pos_y] == 1)
+			return (ray);
 	}
+	return (0);
 }
 
 t_ray	*ray_dist(t_root *root, t_ray *ray)
@@ -44,7 +43,7 @@ t_ray	*ray_dist(t_root *root, t_ray *ray)
 		ray->dist_to_y = (root->pos_y - ray->pos_y) * ray->dist_from_y;
 	else
 		ray->dist_to_y = (ray->pos_y + 1 - root->pos_y) * ray->dist_from_y;
-	return (ray);
+	return (ray_casting(root, ray));
 }	
 
 t_ray	*ray_init(t_root *root, int i)
@@ -76,7 +75,6 @@ t_ray	*ray_core(t_root *root, int i)
 	ray = ray_init(root, i);
 	if (ray == 0)
 		return (0);
-	ray_casting(ray, root->map);
 	if (ray->card % 2)
 		ray->wall_dist = (ray->pos_y - root->pos_y + (1 - ray->ext_y) / 2) / ray->dir_y;
 	else
@@ -115,7 +113,7 @@ t_root	*draw_core(t_root *root)
 	i = 0;
 	while (i < root->width)
 	{
-		ray = ray_core(root);
+		ray = ray_core(root, i);
 		if (ray == 0)
 			return (destroy(root, 4, "error: can't draw"));
 		draw(root, ray, i);
@@ -123,6 +121,7 @@ t_root	*draw_core(t_root *root)
 		i++;
 	}
 	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
+	return (root);
 }
 
 int	key_hook(int keycode, t_root *root)
