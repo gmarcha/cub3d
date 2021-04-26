@@ -33,6 +33,7 @@ int	main(int argc, char *argv[])
 	root = init(argv[1]);
 	if (root == 0)
 		return (1);
+	print_map(root->map, root->nb_lines + 1, root->size_line + 1);
 	mlx_hook(root->mlx_win, 2, (1L << 0), &key_hook, root);
 	mlx_loop(root->mlx);
 	return (0);

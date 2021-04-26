@@ -1,25 +1,47 @@
 #include "cub3d.h"
 
-int	**allocate_map(int nb_lines, int size_line)
+t_root	*valid_map(t_root *root)
 {
-	int				**map;
 	int				i;
+	int				j;
 
-	map = (int **)malloc(sizeof(int *) * nb_lines);
-	if (map == 0)
-		return (0);
 	i = 0;
-	while (i < nb_lines)
+	while (++i < root->nb_lines + 1)
 	{
-		map[i] = (int *)malloc(sizeof(int) * size_line);
-		if (map[i] == 0)
-			return (free_matrix(map, i));
-		i++;
+		j = 0;
+		while (++j < root->size_line + 1)
+		{
+			if (map[i][j] == 0)
+				if (map[i - 1][j] == -1 || map[i + 1][j] == -1
+				|| map[i][j - 1] == -1 || map[i][j + 1] == -1)
+					return (destroy(root, 2, "error: invalid map"));
+			if (map[i][j] == -1)
+				if (map[i - 1][j] == 0 || map[i + 1][j] == 0
+				|| map[i][j - 1] == 0 || map[i][j + 1] == 0
+				|| map[i - 1][j] == 2 || map[i + 1][j] == 2
+				|| map[i][j - 1] == 2 || map[i][j + 1] == 2)
+					return (destroy(root, 2, "error: invalid map"));
+		}
 	}
-	return (map);
+	return (root);
 }
 
-void	fill_map(t_root *root, char *buf, int **map)
+int	fill_map(char c, int *n)
+{
+	if (c == '0' || c == 'N' || c == 'S' || c == 'W' || c == 'E')
+		*n = 0;
+	if (c == '1')
+		*n = 1;
+	if (c == '2')
+		*n = 2;
+	if (c == 0 || c == '\n' || c == ' ')
+		*n = -1;
+	if (c && c != '\n')
+		return (1);
+	return (0);
+}
+
+t_root	*parse_map(t_root *root, char *buf)
 {
 	int				i;
 	int				j;
@@ -29,59 +51,45 @@ void	fill_map(t_root *root, char *buf, int **map)
 	j = 0;
 	i = 0;
 	while (j < root->size_line + 2)
-		map[i][j++] = -1;
+		root->map[i][j++] = -1;
 	while (++i < root->nb_lines + 1)
 	{
 		j = 0;
-		map[i][j] = -1;
+		root->map[i][j] = -1;
 		while (++j < root->size_line + 2)
-		{
-			if (buf[k] == '0' || buf[k] == 'N')
-				map[i][j] = 0;
-			if (buf[k] == '1')
-				map[i][j] = 1;
-			if (buf[k] == '2')
-				map[i][j] = 2;
-			if (buf[k] == ' ')
-				map[i][j] = -1;
-			if (buf[k] == 0 || buf[k] == '\n')
-				map[i][j] = -1;
-			if (buf[k] && buf[k] != '\n')
-				k++;
-		}
+			k += fill_map(buf[k], &root->map[i][j]);
 		k++;
 	}
 	j = 0;
 	while (j < root->size_line + 2)
-		map[i][j++] = -1;
-
-	i = 0;
-	while (i < root->nb_lines + 2)
-	{
-		j = 0;
-		while (j < root->size_line + 2)
-		{
-			if (map[i][j] == 1)
-				printf("X");
-			else
-				printf(" ");
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
+		root->map[i][j++] = -1;
+	return (valid_map(root));
 }
 
-int	**parse_map(t_root* root, char *buf)
+t_root	*check_map(t_root *root, char c, int *max, int *player)
 {
-	int				**map;
-	int				i;
-	int				max;
+	if (c != 32 && (c < '0' || c > '2'))
+	{
+		if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
+		{
+			if (*player)
+				return (destroy(root, 2, "error: too much player in map"));
+			(*player)++;
+		}
+		else
+			return (destroy(root, 2, "error: invalid character in map"));
+	}
+	(*max)++;
+	return (root);
+}
+
+t_root	*size_map(t_root *root, char *buf)
+{
 	int				player;
+	int				max;
+	int				i;
 
 	player = 0;
-	root->nb_lines = 1;
-	root->size_line = 0;
 	max = 0;
 	i = -1;
 	while (buf[++i])
@@ -94,62 +102,28 @@ int	**parse_map(t_root* root, char *buf)
 			root->nb_lines++;
 		}
 		else
-		{
-			if (buf[i] != 32 && (buf[i] < '0' || buf[i] > '2'))
-			{
-				if (buf[i] == 'N' || buf[i] == 'S'
-				|| buf[i] == 'W' || buf[i] == 'E')
-				{
-					if (player)
-						return (destroy(root, 2, "error: too much player in map"));
-					player++;
-				}
-				else
-					return (destroy(root, 2, "error: invalid character in map"));
-			}
-			max++;
-		}
+			if (check_map(root, buf[i], &player) == 0)
+				return (0);
 	}
 	if (root->size_line < max)
 		root->size_line = max;
+	return (root);
+}
+
+int	**init_map(t_root* root, char *buf)
+{
+	int				**map;
+
+	root->nb_lines = 1;
+	root->size_line = 0;
+	if (size_map(root, buf) == 0)
+		return (0);
 	if (root->nb_lines < 3 || root->size_line < 3)
 		return (destroy(root, 2, "error: map is too little"));
 	map = allocate_map(root->nb_lines + 2, root->size_line + 2);
 	if (map == 0)
 		return (destroy(root, 2, "error: can't allocate memory"));
-	fill_map(root, buf, map);
 	return (map);
-}
-
-t_root	*check_map(t_root *root)
-{
-	int				i;
-	int				j;
-
-	i = 0;
-	while (++i < root->nb_lines + 1)
-	{
-		j = 0;
-		while (++j < root->size_line + 1)
-		{
-			if (map[i][j] == 0)
-			{
-				if (map[i - 1][j] == -1 || map[i + 1][j] == -1
-				|| map[i][j - 1] == -1 || map[i][j + 1] == -1)
-					return (destroy(root, 2, "error: invalid map"));
-			}
-			if (map[i][j] == -1)
-			{
-				if (map[i - 1][j] == 0 || map[i + 1][j] == 0
-				|| map[i][j - 1] == 0 || map[i][j + 1] == 0)
-					return (destroy(root, 2, "error: invalid map"));
-				if (map[i - 1][j] == 2 || map[i + 1][j] == 2
-				|| map[i][j - 1] == 2 || map[i][j + 1] == 2)
-					return (destroy(root, 2, "error: invalid map"));
-			}
-		}
-	}
-	return (root);
 }
 
 t_root	*parse_scene(char *buf)
@@ -169,10 +143,10 @@ t_root	*parse_scene(char *buf)
 	}
 	if (check_info(root) == 0)
 		return (0);
-	root->map = parse_map(root, buf);
+	root->map = init_map(root, buf);
 	if (root->map == 0)
 		return (0);
-	if (check_map(root) == 0)
+	if (parse_map(root, buf, root->map) == 0)
 	 	return (0);
 	return (root);
 }
