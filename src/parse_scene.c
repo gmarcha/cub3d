@@ -121,6 +121,37 @@ int	**parse_map(t_root* root, char *buf)
 	return (map);
 }
 
+t_root	*check_map(t_root *root)
+{
+	int				i;
+	int				j;
+
+	i = 0;
+	while (++i < root->nb_lines + 1)
+	{
+		j = 0;
+		while (++j < root->size_line + 1)
+		{
+			if (map[i][j] == 0)
+			{
+				if (map[i - 1][j] == -1 || map[i + 1][j] == -1
+				|| map[i][j - 1] == -1 || map[i][j + 1] == -1)
+					return (destroy(root, 2, "error: invalid map"));
+			}
+			if (map[i][j] == -1)
+			{
+				if (map[i - 1][j] == 0 || map[i + 1][j] == 0
+				|| map[i][j - 1] == 0 || map[i][j + 1] == 0)
+					return (destroy(root, 2, "error: invalid map"));
+				if (map[i - 1][j] == 2 || map[i + 1][j] == 2
+				|| map[i][j - 1] == 2 || map[i][j + 1] == 2)
+					return (destroy(root, 2, "error: invalid map"));
+			}
+		}
+	}
+	return (root);
+}
+
 t_root	*parse_scene(char *buf)
 {
 	t_root			*root;
@@ -141,7 +172,7 @@ t_root	*parse_scene(char *buf)
 	root->map = parse_map(root, buf);
 	if (root->map == 0)
 		return (0);
-	// if (check_map(root) == 0)
-	// 	return (0);
+	if (check_map(root) == 0)
+	 	return (0);
 	return (root);
 }
