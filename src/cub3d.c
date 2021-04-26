@@ -106,6 +106,7 @@ void	draw(t_root *root, t_ray *ray, int i)
 		mlx_draw_pixel(root->mlx_img, i, j++, color[ray->card]);
 	while (j < root->height)
 		mlx_draw_pixel(root->mlx_img, i, j++, root->floor_color);
+	printf("%d\t%d\n", i, j);
 }
 
 t_root	*draw_core(t_root *root)
@@ -139,17 +140,17 @@ int	key_hook(int keycode, t_root *root)
 	}
 	if (keycode == 119)
 	{
-		if (root->map[(int)(root->pos_x + root->dir_x)][(int)root->pos_y] == 0)
-			root->pos_x += root->dir_x;
-		if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y)] == 0)
-			root->pos_y += root->dir_y;
+		if (root->map[(int)(root->pos_x + root->dir_x) * MOVE_SPEED][(int)root->pos_y] == 0)
+			root->pos_x += root->dir_x * MOVE_SPEED;
+		if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y) * MOVE_SPEED] == 0)
+			root->pos_y += root->dir_y * MOVE_SPEED;
 	}
 	if (keycode == 115)
 	{
-		if (root->map[(int)(root->pos_x - root->dir_x)][(int)root->pos_y] == 0)
-			root->pos_x -= root->dir_x;
-		if (root->map[(int)root->pos_x][(int)(root->pos_y - root->dir_y)] == 0)
-			root->pos_y -= root->dir_y;
+		if (root->map[(int)(root->pos_x - root->dir_x) * MOVE_SPEED][(int)root->pos_y] == 0)
+			root->pos_x -= root->dir_x * MOVE_SPEED;
+		if (root->map[(int)root->pos_x][(int)(root->pos_y - root->dir_y) * MOVE_SPEED] == 0)
+			root->pos_y -= root->dir_y * MOVE_SPEED;
 	}
 	// if (keycode == 97) {};
 	// if (keycode == 100) {};
