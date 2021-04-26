@@ -16,6 +16,9 @@
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
 
+# define MOVE_SPEED 3
+# define ROTATION_SPEED 3
+
 typedef struct s_root
 {
 	void			*mlx;

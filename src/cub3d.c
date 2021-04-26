@@ -4,7 +4,6 @@ t_ray	*ray_casting(t_root *root, t_ray *ray)
 {
 	while (1)
 	{
-		printf("%d\t%d\n", ray->pos_x, ray->pos_y);
 		if (ray->dist_to_x < ray->dist_to_y)
 		{
 			ray->dist_to_x += ray->dist_from_x;
@@ -126,12 +125,35 @@ t_root	*draw_core(t_root *root)
 
 int	key_hook(int keycode, t_root *root)
 {
+	double			tmp;
+
 	printf("Print keycode: %d\n", keycode);
 	if (keycode == 65307)
 	{
 		destroy(root, 4, 0);
 		exit(0);
 	}
+	if (keycode == 119)
+	{
+		if (root->map[(int)root->pos_y][(int)(root->pos_x + root->dir_x) * MOVE_SPEED])
+			root->pos_x += root->dir_x * MOVE_SPEED;
+		if (root->map[(int)(root->pos_y + root->dir_y) * MOVE_SPEED][(int)root->pos_x])
+			root->pos_y += root->dir_y * MOVE_SPEED;
+	}
+	if (keycode == 115)
+	{
+		if (root->map[(int)root->pos_y][(int)(root->pos_x - root->dir_x) * MOVE_SPEED])
+			root->pos_x -= root->dir_x * MOVE_SPEED;
+		if (root->map[(int)(root->pos_y - root->dir_y) * MOVE_SPEED][(int)root->pos_x])
+			root->pos_y -= root->dir_y * MOVE_SPEED;
+	}
+	if (keycode == 97);
+	if (keycode == 100);
+	if (keycode == 65361)
+	{
+
+	}
+	if (keycode == 65363)
 	if (draw_core(root) == 0)
 	{
 		destroy(root, 4, 0);
