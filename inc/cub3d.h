@@ -82,7 +82,7 @@ t_root				*init_scene(char *file);
 t_root				*init(char *file);
 
 void				mlx_draw_pixel(t_img *mlx_img, int x, int y, int color);
-int					mlx_rgb_to_int(int o, int r, int g, int b);
+unsigned int		mlx_rgb_to_int(int o, int r, int g, int b);
 
 t_root				*parse_color(t_root *root, char **buf, int *floor);
 

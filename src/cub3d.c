@@ -69,10 +69,10 @@ t_ray	*ray_init(t_root *root, int i)
 
 t_ray	*ray_texture(t_root *root, t_ray *ray)
 {
-	if (ray->card % 2)
-		ray->wall_coord = root->pos_y + ray->dir_y * ray->wall_dist;
-	else
+	if (ray->card % 2 == 0)
 		ray->wall_coord = root->pos_x + ray->dir_x * ray->wall_dist;
+	else
+		ray->wall_coord = root->pos_y + ray->dir_y * ray->wall_dist;
 	ray->wall_coord -= floor(ray->wall_coord);
 	ray->text_x = (int)(ray->wall_coord * (double)root->walls_texture[ray->card]->width);
 	if ((ray->card % 2 && ray->dir_x > 0) || (ray->card % 2 == 0 && ray->dir_y < 0))
@@ -105,8 +105,7 @@ t_ray	*ray_core(t_root *root, int i)
 
 void	draw(t_root *root, t_ray *ray, int i)
 {
-	int				color[4];
-	char			*target;
+	char			*pixel;
 	int				j;
 
 	j = 0;
@@ -120,15 +119,8 @@ void	draw(t_root *root, t_ray *ray, int i)
 	{
 		ray->text_y = (int)ray->text_pos & (root->walls_texture[ray->card]->height - 1);
 		ray->text_pos += ray->text_step;
-		target = root->walls_texture[ray->card]->data + ((root->walls_texture[ray->card]->height * root->walls_texture[ray->card]->bpp / 8) * ray->text_y + ray->text_x);
-		color[0] = *(unsigned char *)target++;
-		color[1] = *(unsigned char *)target++;
-		color[2] = *(unsigned char *)target++;
-		color[3] = *(unsigned char *)target++;
-		for (int k = 0; k < 4; k++)
-			printf("%d ", color[k]);
-		printf("\n");
-		mlx_draw_pixel(root->mlx_img, i, j, mlx_rgb_to_int(color[0], color[1], color[2], color[3]));
+		pixel = root->walls_texture[ray->card]->data + ((ray->text_x * root->walls_texture[ray->card]->bpp / 8) + (ray->text_y * root->walls_texture[ray->card]->size_line));
+		mlx_draw_pixel(root->mlx_img, i, j, *(unsigned int *)pixel);
 		j++;
 	}
 }
