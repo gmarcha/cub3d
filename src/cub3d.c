@@ -38,7 +38,7 @@ int	key_hook(int keycode, t_root *r)
 	}
 	if (keycode == 115)
 	{
-		if (r->map[(int)(r->pos_x - root->dir_x * MS)][(int)r->pos_y] != 1)
+		if (r->map[(int)(r->pos_x - r->dir_x * MS)][(int)r->pos_y] != 1)
 			r->pos_x -= r->dir_x * MS;
 		if (r->map[(int)r->pos_x][(int)(r->pos_y - r->dir_y * MS)] != 1)
 			r->pos_y -= r->dir_y * MS;
