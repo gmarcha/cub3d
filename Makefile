@@ -8,6 +8,7 @@ SRC			=	src/check_info.c \
 				src/check_map.c \
 				src/cub3d.c \
 				src/destroy.c \
+				src/draw_env.c \
 				src/fill_map.c \
 				src/init_map.c \
 				src/init_scene.c \
@@ -21,6 +22,11 @@ SRC			=	src/check_info.c \
 				src/parse_texture.c \
 				src/parse_value.c \
 				src/parse_wall.c \
+				src/ray_casting.c \
+				src/ray_core.c \
+				src/ray_dist.c \
+				src/ray_init.c \
+				src/ray_texture.c \
 				src/root_init.c \
 				src/size_map.c \
 				src/utils.c \

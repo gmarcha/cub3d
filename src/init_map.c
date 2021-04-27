@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int	**init_map(t_root* root, char *buf)
+int	**init_map(t_root *root, char *buf)
 {
 	int				**map;
 

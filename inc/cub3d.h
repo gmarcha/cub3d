@@ -73,9 +73,11 @@ void				*free_matrix(int **matrix, int size);
 void				free_root(t_root *root);
 void				*destroy(t_root *root, int flag, char *error);
 
+void				draw_env(t_root *r, t_ray *ray, int i);
+
 int					fill_map(t_root *root, int i, int j, char c);
 
-int					**init_map(t_root* root, char *buf);
+int					**init_map(t_root *root, char *buf);
 
 t_root				*init_scene(char *file);
 
@@ -99,6 +101,16 @@ t_root				*parse_texture(t_root *root, char **buf, t_img **img);
 t_root				*parse_value(t_root *root, char **buf);
 
 t_root				*parse_wall(t_root *root, char **buf);
+
+t_ray				*ray_casting(t_root *root, t_ray *ray);
+
+t_ray				*ray_core(t_root *root, int i);
+
+t_ray				*ray_dist(t_root *root, t_ray *ray);
+
+t_ray				*ray_init(t_root *root, int i);
+
+t_ray				*ray_texture(t_root *root, t_ray *ray);
 
 t_root				*root_init(void);
 

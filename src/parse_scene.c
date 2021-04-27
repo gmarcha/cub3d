@@ -21,6 +21,6 @@ t_root	*parse_scene(char *buf)
 	if (root->map == 0)
 		return (0);
 	if (parse_map(root, buf) == 0)
-	 	return (0);
+		return (0);
 	return (root);
 }
