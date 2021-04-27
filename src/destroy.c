@@ -11,10 +11,23 @@ void	*free_matrix(int **matrix, int size)
 	return (0);
 }
 
+void	*free_sprites(t_sprite **sprites, int size)
+{
+	int				i;
+
+	i = 0;
+	while (i < size)
+		free(sprites[i++]);
+	free(sprites);
+	return (0);
+}
+
 void	free_root(t_root *root)
 {
 	int				i;
 
+	if (root->sprites)
+		free_sprites(root->sprites, root->nb_sprites);
 	if (root->map)
 		free_matrix(root->map, root->nb_lines + 2);
 	i = -1;

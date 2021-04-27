@@ -19,6 +19,12 @@
 # define MS				1
 # define RS				1
 
+typedef struct s_sprite
+{
+	int			pos_x;
+	int			pos_y;
+}				t_sprite;
+
 typedef struct s_root
 {
 	void			*mlx;
@@ -26,13 +32,15 @@ typedef struct s_root
 	t_img			*mlx_img;
 	int				width;
 	int				height;
-	t_img			*walls_texture[4];
+	t_img			walls_texture[4];
 	t_img			*sprite_texture;
 	int				floor_color;
 	int				ceil_color;
 	int				**map;
 	int				nb_lines;
 	int				size_line;
+	t_sprite		**sprites;
+	int				nb_sprites;
 	double			pos_x;
 	double			pos_y;
 	double			dir_x;
@@ -70,6 +78,7 @@ t_root				*check_info(t_root *root);
 t_root				*check_map(t_root *root, char c, int *max, int *player);
 
 void				*free_matrix(int **matrix, int size);
+void				*free_sprites(t_sprite **sprites, int size);
 void				free_root(t_root *root);
 void				*destroy(t_root *root, int flag, char *error);
 
@@ -121,7 +130,7 @@ t_root				*valid_map(t_root *root, int **map);
 int					ft_strclen(char *s, int c);
 int					is_space(int c);
 int					**allocate_map(int nb_lines, int size_line);
+t_sprite			**allocate_sprites(int nb_sprites);
 void				print_map(int **map, int nb_lines, int size_line);
-void				draw_square(t_img *img, int color);
 
 #endif

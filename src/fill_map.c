@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int	fill_map(t_root *root, int i, int j, char c)
+void	set_player(t_root *root, int i, int j, char c)
 {
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{
@@ -15,12 +15,24 @@ int	fill_map(t_root *root, int i, int j, char c)
 		if (c == 'W')
 			root->dir_y = 1;
 	}
-	if (c == '0')
-		root->map[i][j] = 0;
+}
+
+int	fill_map(t_root *root, int i, int j, char c)
+{
+	static int		count;
+
+	set_player(root, i, j, c);
+	if (c == '2')
+	{
+		root->map[i][j] = 2;
+		root->sprites[count]->pos_x = j;
+		root->sprites[count]->pos_y = i;
+		count++;
+	}
 	if (c == '1')
 		root->map[i][j] = 1;
-	if (c == '2')
-		root->map[i][j] = 2;
+	if (c == '0')
+		root->map[i][j] = 0;
 	if (c == 0 || c == '\n' || c == ' ')
 		root->map[i][j] = -1;
 	if (c && c != '\n')

@@ -36,6 +36,25 @@ int	**allocate_map(int nb_lines, int size_line)
 	return (map);
 }
 
+t_sprite	**allocate_sprites(int nb_sprites)
+{
+	t_sprite		**sprites;
+	int				i;
+
+	sprites = (t_sprite **)malloc(sizeof(t_sprite *) * nb_sprites);
+	if (sprites == 0)
+		return (0);
+	i = 0;
+	while (i < nb_sprites)
+	{
+		sprites[i] = (t_sprite *)malloc(sizeof(t_sprite));
+		if (sprites[i] == 0)
+			return (free_sprites(sprites, i));
+		i++;
+	}
+	return (sprites);
+}
+
 void	print_map(int **map, int nb_lines, int size_line)
 {
 	int				i;
@@ -55,19 +74,4 @@ void	print_map(int **map, int nb_lines, int size_line)
 		printf("\n");
 	}
 	printf("\n============================================================\n");
-}
-
-void	draw_square(t_img *img, int color)
-{
-	int				i;
-	int				j;
-
-	i = 0;
-	while (i < 640)
-	{
-		j = 0;
-		while (j < 480)
-			mlx_draw_pixel(img, i, j++, color);
-		i++;
-	}
 }
