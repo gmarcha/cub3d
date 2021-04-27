@@ -43,8 +43,20 @@ int	key_hook(int keycode, t_root *r)
 		if (r->map[(int)r->pos_x][(int)(r->pos_y - r->dir_y * MS)] != 1)
 			r->pos_y -= r->dir_y * MS;
 	}
-	if (keycode == 97) {};
-	if (keycode == 100) {};
+	if (keycode == 97)
+	{
+		if (r->map[(int)(r->pos_x + r->dir_x * MS)][(int)r->pos_y] != 1)
+			r->pos_y += r->dir_y * MS;
+		if (r->map[(int)r->pos_x][(int)(r->pos_y + r->dir_y * MS)] != 1)
+			r->pos_x += r->dir_x * MS;
+	}
+	if (keycode == 100)
+	{
+		if (r->map[(int)(r->pos_x - r->dir_x * MS)][(int)r->pos_y] != 1)
+			r->pos_y -= r->dir_y * MS;
+		if (r->map[(int)r->pos_x][(int)(r->pos_y - r->dir_y * MS)] != 1)
+			r->pos_x -= r->dir_x * MS;
+	}
 	if (keycode == 65361)
 	{
 		tmp = r->dir_x;
