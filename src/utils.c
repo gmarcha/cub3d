@@ -52,10 +52,10 @@ void	print_map(int **map, int nb_lines, int size_line)
 	int				j;
 
 	i = 0;
-	while (++i < nb_lines)
+	while (i < nb_lines + 1)
 	{
 		j = 0;
-		while (++j < size_line)
+		while (j < size_line + 1)
 		{
 			if (map[i][j] == 1)
 				printf("X");
@@ -65,8 +65,10 @@ void	print_map(int **map, int nb_lines, int size_line)
 				printf(" ");
 			else
 				printf("?");
+			j++;
 		}
 		printf("\n");
+		i++;
 	}
 	printf("\n============================================================\n");
 }
