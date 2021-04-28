@@ -14,20 +14,21 @@ void	set_player(t_root *root, int i, int j, char c)
 			root->dir_y = -1;
 		if (c == 'W')
 			root->dir_y = 1;
+		root->map[i][j] = 0;
 	}
 }
 
 int	fill_map(t_root *root, int i, int j, char c)
 {
-	static int		count;
+	// static int		count;
 
 	set_player(root, i, j, c);
 	if (c == '2')
 	{
 		root->map[i][j] = 2;
-		root->sprites[count]->pos_x = j;
-		root->sprites[count]->pos_y = i;
-		count++;
+		// root->sprites[count]->pos_x = j;
+		// root->sprites[count]->pos_y = i;
+		// count++;
 	}
 	if (c == '1')
 		root->map[i][j] = 1;

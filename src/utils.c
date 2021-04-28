@@ -36,22 +36,13 @@ int	**allocate_map(int nb_lines, int size_line)
 	return (map);
 }
 
-t_sprite	**allocate_sprites(int nb_sprites)
+t_sprite	*allocate_sprites(int nb_sprites)
 {
-	t_sprite		**sprites;
-	int				i;
+	t_sprite		*sprites;
 
-	sprites = (t_sprite **)malloc(sizeof(t_sprite *) * nb_sprites);
+	sprites = (t_sprite *)malloc(sizeof(t_sprite) * nb_sprites);
 	if (sprites == 0)
 		return (0);
-	i = 0;
-	while (i < nb_sprites)
-	{
-		sprites[i] = (t_sprite *)malloc(sizeof(t_sprite));
-		if (sprites[i] == 0)
-			return (free_sprites(sprites, i));
-		i++;
-	}
 	return (sprites);
 }
 

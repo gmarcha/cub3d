@@ -18,8 +18,7 @@ void	draw_env(t_root *r, t_ray *ray, int i)
 	{
 		ray->text_y = (int)ray->text_pos & (img->height - 1);
 		ray->text_pos += ray->text_step;
-		pixel = img->data
-			+ ((ray->text_x * img->bpp / 8) + (ray->text_y * img->size_line));
+		pixel = img->data + ((ray->text_x * img->bpp / 8) + (ray->text_y * img->size_line));
 		mlx_draw_pixel(r->mlx_img, i, j, *(unsigned int *)pixel);
 		j++;
 	}

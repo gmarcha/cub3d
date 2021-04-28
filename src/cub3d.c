@@ -3,28 +3,28 @@
 t_root	*draw_core(t_root *root)
 {
 	t_ray			*ray;
-	double			*buf;
+	// double			*buf;
 	int				i;
 
-	buf = (double *)malloc(sizeof(double) * root->width);
-	if (buf == 0)
-		return (destroy(root, 4, "error: can't allocate zbuffer"));
+	// buf = (double *)malloc(sizeof(double) * root->width);
+	// if (buf == 0)
+	// 	return (destroy(root, 4, "error: can't allocate zbuffer"));
 	i = 0;
 	while (i < root->width)
 	{
 		ray = ray_core(root, i);
 		if (ray == 0)
 		{
-			free(buf);
+			// free(buf);
 			return (destroy(root, 4, "error: can't init ray"));
 		}
-		buf[i] = ray->wall_dist;
+		// buf[i] = ray->wall_dist;
 		draw_env(root, ray, i);
 		free(ray);
 		i++;
 	}
 
-	free(buf);
+	// free(buf);
 	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
 	return (root);
 }
