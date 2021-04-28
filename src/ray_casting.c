@@ -2,7 +2,7 @@
 
 t_ray	*ray_casting(t_root *root, t_ray *ray)
 {
-	while (1)
+	while (root->map[ray->pos_x][ray->pos_y] != 1)
 	{
 		if (ray->dist_to_x < ray->dist_to_y)
 		{
@@ -20,8 +20,6 @@ t_ray	*ray_casting(t_root *root, t_ray *ray)
 			if (ray->ext_y == 1)
 				ray->card = 2;
 		}
-		if (root->map[ray->pos_x][ray->pos_y] == 1)
-			return (ray);
 	}
-	return (0);
+	return (ray);
 }
