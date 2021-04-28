@@ -63,6 +63,8 @@ void	print_map(int **map, int nb_lines, int size_line)
 				printf("-");
 			else if (map[i][j] == 0)
 				printf(" ");
+			else if (map[i][j] == 2)
+				printf("O");
 			else
 				printf("?");
 			j++;
