@@ -15,6 +15,8 @@ t_ray	*ray_texture(t_root *root, t_ray *ray)
 		|| (ray->card % 2 == 0 && ray->dir_y < 0))
 		ray->text_x = (double)img->width - ray->text_x - 1;
 	ray->text_step = 1.0 * img->height / ray->wall_height;
-	ray->text_pos = (ray->wall_start - root->height / 2 + ray->wall_height / 2) * ray->text_step;
+	ray->text_pos
+		= (ray->wall_start - root->height / 2 + ray->wall_height / 2)
+		* ray->text_step;
 	return (ray);
 }

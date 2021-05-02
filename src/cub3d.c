@@ -3,77 +3,69 @@
 t_root	*draw_core(t_root *root)
 {
 	t_ray			*ray;
-	// double			*buf;
 	int				i;
 
-	// buf = (double *)malloc(sizeof(double) * root->width);
-	// if (buf == 0)
-	// 	return (destroy(root, 4, "error: can't allocate zbuffer"));
 	i = 0;
 	while (i < root->width)
 	{
 		ray = ray_core(root, i);
 		if (ray == 0)
-		{
-			// free(buf);
-			return (destroy(root, 4, "error: can't init ray"));
-		}
-		// buf[i] = ray->wall_dist;
+			return (destroy(root, 4, "error: can't draw"));
 		draw_env(root, ray, i);
 		free(ray);
 		i++;
 	}
-
-	// free(buf);
 	mlx_put_image_to_window(root->mlx, root->mlx_win, root->mlx_img, 0, 0);
 	return (root);
 }
 
-int	key_hook(int keycode, t_root *r)
+int	key_hook(int keycode, t_root *root)
 {
 	double			tmp;
 
 	printf("Print keycode: %d\n", keycode);
 	if (keycode == 65307)
 	{
-		destroy(r, 4, 0);
+		destroy(root, 4, 0);
 		exit(0);
 	}
 	if (keycode == 119)
 	{
-		if (r->map[(int)(r->pos_x + r->dir_x * MS)][(int)r->pos_y] != 1)
-			r->pos_x += r->dir_x * MS;
-		if (r->map[(int)r->pos_x][(int)(r->pos_y + r->dir_y * MS)] != 1)
-			r->pos_y += r->dir_y * MS;
+		if (root->map[(int)(root->pos_x + root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
+			root->pos_x += root->dir_x * MOVE_SPEED;
+		if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y) * MOVE_SPEED] != 1)
+			root->pos_y += root->dir_y * MOVE_SPEED;
 	}
 	if (keycode == 115)
 	{
-		if (r->map[(int)(r->pos_x - r->dir_x * MS)][(int)r->pos_y] != 1)
-			r->pos_x -= r->dir_x * MS;
-		if (r->map[(int)r->pos_x][(int)(r->pos_y - r->dir_y * MS)] != 1)
-			r->pos_y -= r->dir_y * MS;
+		if (root->map[(int)(root->pos_x - root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
+			root->pos_x -= root->dir_x * MOVE_SPEED;
+		if (root->map[(int)root->pos_x][(int)(root->pos_y - root->dir_y) * MOVE_SPEED] != 1)
+			root->pos_y -= root->dir_y * MOVE_SPEED;
 	}
+	// if (keycode == 97) {};
+	// if (keycode == 100) {};
 	if (keycode == 65361)
 	{
-		tmp = r->dir_x;
-		r->dir_x = tmp * cos(RS) - r->dir_y * sin(RS);
-		r->dir_y = tmp * sin(RS) + r->dir_y * cos(RS);
-		tmp = r->plane_x;
-		r->plane_x = tmp * cos(RS) - r->plane_y * sin(RS);
-		r->plane_y = tmp * sin(RS) + r->plane_y * cos(RS);
+		tmp = root->dir_x;
+		root->dir_x = tmp * cos(ROTATION_SPEED) - root->dir_y * sin(ROTATION_SPEED);
+		root->dir_y = tmp * sin(ROTATION_SPEED) + root->dir_y * cos(ROTATION_SPEED);
+		tmp = root->plane_x;
+		root->plane_x = tmp * cos(ROTATION_SPEED) - root->plane_y * sin(ROTATION_SPEED);
+		root->plane_y = tmp * sin(ROTATION_SPEED) + root->plane_y * cos(ROTATION_SPEED);
 	}
 	if (keycode == 65363)
 	{
-		tmp = r->dir_x;
-		r->dir_x = tmp * cos(-RS) - r->dir_y * sin(-RS);
-		r->dir_y = tmp * sin(-RS) + r->dir_y * cos(-RS);
-		tmp = r->plane_x;
-		r->plane_x = tmp * cos(-RS) - r->plane_y * sin(-RS);
-		r->plane_y = tmp * sin(-RS) + r->plane_y * cos(-RS);
+		tmp = root->dir_x;
+		root->dir_x = tmp * cos(-ROTATION_SPEED) - root->dir_y * sin(-ROTATION_SPEED);
+		root->dir_y = tmp * sin(-ROTATION_SPEED) + root->dir_y * cos(-ROTATION_SPEED);
+		tmp = root->plane_x;
+		root->plane_x = tmp * cos(-ROTATION_SPEED) - root->plane_y * sin(-ROTATION_SPEED);
+		root->plane_y = tmp * sin(-ROTATION_SPEED) + root->plane_y * cos(-ROTATION_SPEED);
 	}
-	if (draw_core(r) == 0)
+	if (draw_core(root) == 0)
 	{
-		destroy(r, 4, 0);
+		destroy(root, 4, 0);
 		exit(0);
 	}
 	return (1);

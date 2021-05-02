@@ -19,7 +19,7 @@ t_root	*size_map(t_root *root, char *buf)
 			root->nb_lines++;
 		}
 		else
-			if (check_map(root, buf[i], &max, &player, &root->nb_sprites) == 0)
+			if (check_map(root, buf[i], &max, &player) == 0)
 				return (0);
 	}
 	if (root->size_line < max)

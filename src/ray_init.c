@@ -21,7 +21,5 @@ t_ray	*ray_init(t_root *root, int i)
 		ray->ext_y = -1;
 	else
 		ray->ext_y = 1;
-	// printf("%d\t%d\n", ray->pos_x, ray->pos_y);
-	// printf("%f\t%f\n", ray->dir_x, ray->dir_y);
 	return (ray_dist(root, ray));
 }
