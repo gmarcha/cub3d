@@ -1,0 +1,7 @@
+*.o
+*.a
+cub3d
+
+*.png
+*.jpg
+*.bmp
