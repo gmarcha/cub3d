@@ -1,8 +1,10 @@
 NAME		=	cub3d
-CC			=	gcc
+LFT			=	libft/libft.a
+MLX			=	mlx/Makefile.gen
+CC			=	clang
 FLAGS		=	-Wall -Wextra -Werror
-INC			=	-I ./inc
-LIB			=	-L ./libft -lft -lmlx -lXext -lX11 -lm -lbsd
+INC			=	-I ./inc -I ./libft -I ./mlx
+LIB			=	-L ./libft -lft -L ./mlx -lmlx -lXext -lX11 -lm -lbsd
 OBJ			=	$(patsubst src%, obj%, $(SRC:.c=.o))
 SRC			=	src/check_info.c \
 				src/check_map.c \
@@ -32,29 +34,31 @@ SRC			=	src/check_info.c \
 				src/utils.c \
 				src/valid_map.c
 
-all:		$(NAME)
+all:		$(MLX) $(LFT) obj $(NAME)
 
 $(NAME):	$(OBJ)
-			make -C libft
 			$(CC) $(FLAGS) -fsanitize=address -o $@ $^ $(LIB)
+
+$(LFT):
+		@make -s -C libft
+
+$(MLX):
+		@make -s -C mlx
 
 obj/%.o:	src/%.c
 			$(CC) $(FLAGS) $(INC) -o $@ -c $<
 
-norm:
-			norminette inc/cub3d.h $(SRC)
-
-run:		$(NAME)
-			./$(NAME) map.cub
+obj:
+		@mkdir -p obj
 
 clean:
-			make $@ -C libft
-			rm -rf $(OBJ)
+			@make -s $@ -C libft
+			rm -rf $(OBJ) obj
 
 fclean:		clean
-			make $@ -C libft
+			@make -s $@ -C libft
 			rm -rf $(NAME)
 
 re:			fclean all
 
-.PHONY:		all norm run clean fclean re
+.PHONY:		all obj clean fclean re
