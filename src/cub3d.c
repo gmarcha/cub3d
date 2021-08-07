@@ -88,7 +88,6 @@ int	key_press(int keycode, t_root *root)
 	else if (keycode == 65363)
 		root->rotate_right = 1;
 	update(root);
-	mlx_flush_event(root->mlx);
 	return (1);
 }
 
@@ -124,6 +123,7 @@ int	main(int argc, char *argv[])
 	print_map(root->map, root->nb_lines + 1, root->size_line + 1);
 	if (draw_core(root) == 0)
 		return (1);
+	mlx_do_key_autorepeatoff(root->mlx);
 	mlx_hook(root->mlx_win, 2, 1L << 0, key_press, root);
 	mlx_hook(root->mlx_win, 3, 1L << 1, key_release, root);
 	// mlx_hook(root->mlx_win, 17, 1L << 17, destroy_hook, root);
