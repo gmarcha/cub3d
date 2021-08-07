@@ -6,7 +6,8 @@ FLAGS		=	-Wall -Wextra -Werror
 INC			=	-I ./inc -I ./libft -I ./mlx
 LIB			=	-L ./libft -lft -L ./mlx -lmlx -lXext -lX11 -lm -lbsd
 OBJ			=	$(patsubst src%, obj%, $(SRC:.c=.o))
-SRC			=	src/draw/draw_env.c \
+SRC			=	src/draw/draw_core.c \
+				src/draw/draw_env.c \
 				src/parsing/check_info.c \
 				src/parsing/check_map.c \
 				src/parsing/fill_map.c \
