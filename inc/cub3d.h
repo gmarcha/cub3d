@@ -9,8 +9,8 @@
 # include <stdio.h>
 # include <math.h>
 
-# include <mlx.h>
-# include <mlx_int.h>
+# include "mlx.h"
+# include "mlx_int.h"
 # include "libft.h"
 
 # define SCREEN_WIDTH	1920
@@ -118,8 +118,6 @@ t_root				*size_map(t_root *root, char *buf);
 
 t_root				*valid_map(t_root *root, int **map);
 
-int					ft_strclen(char *s, int c);
-int					is_space(int c);
 int					**allocate_map(int nb_lines, int size_line);
 void				print_map(int **map, int nb_lines, int size_line);
 void				draw_square(t_img *img, int color);
