@@ -39,6 +39,12 @@ typedef struct s_root
 	double			dir_y;
 	double			plane_x;
 	double			plane_y;
+	int				move_up;
+	int				move_down;
+	int				move_left;
+	int				move_right;
+	int				rotate_left;
+	int				rotate_right;
 }				t_root;
 
 typedef struct s_ray
@@ -65,15 +71,13 @@ typedef struct s_ray
 	double			text_step;
 }				t_ray;
 
+///  ////////////////////////////////////////////////////  ///
+///  ///          INPUT PARSING AND CHECKING          ///  ///
+///  ////////////////////////////////////////////////////  ///
+
 t_root				*check_info(t_root *root);
 
 t_root				*check_map(t_root *root, char c, int *max, int *player);
-
-void				*free_matrix(int **matrix, int size);
-void				free_root(t_root *root);
-void				*destroy(t_root *root, int flag, char *error);
-
-void				draw_env(t_root *r, t_ray *ray, int i);
 
 int					fill_map(t_root *root, int i, int j, char c);
 
@@ -82,9 +86,6 @@ int					**init_map(t_root *root, char *buf);
 t_root				*init_scene(char *file);
 
 t_root				*init(char *file);
-
-void				mlx_draw_pixel(t_img *mlx_img, int x, int y, int color);
-unsigned int		mlx_rgb_to_int(int o, int r, int g, int b);
 
 t_root				*parse_color(t_root *root, char **buf, int *floor);
 
@@ -102,6 +103,16 @@ t_root				*parse_value(t_root *root, char **buf);
 
 t_root				*parse_wall(t_root *root, char **buf);
 
+t_root				*root_init(void);
+
+t_root				*size_map(t_root *root, char *buf);
+
+t_root				*valid_map(t_root *root, int **map);
+
+///  //////////////////////////////////////////////  ///
+///  ///          RAYCASTING MECHANISM          ///  ///
+///  //////////////////////////////////////////////  ///
+
 t_ray				*ray_casting(t_root *root, t_ray *ray);
 
 t_ray				*ray_core(t_root *root, int i);
@@ -112,11 +123,28 @@ t_ray				*ray_init(t_root *root, int i);
 
 t_ray				*ray_texture(t_root *root, t_ray *ray);
 
-t_root				*root_init(void);
+///  ////////////////////////////////////////  ///
+///  ///          DRAWING FRAMES          ///  ///
+///  ////////////////////////////////////////  ///
 
-t_root				*size_map(t_root *root, char *buf);
+t_root				*draw_core(t_root *root);
 
-t_root				*valid_map(t_root *root, int **map);
+void				draw_env(t_root *r, t_ray *ray, int i);
+
+///  ////////////////////////////////////////  ///
+///  ///          EVENT HANDLING          ///  ///
+///  ////////////////////////////////////////  ///
+
+///  ////////////////////////////////////////  ///
+///  ///          UTIL FUNCTIONS          ///  ///
+///  ////////////////////////////////////////  ///
+
+void				*free_matrix(int **matrix, int size);
+void				free_root(t_root *root);
+void				*destroy(t_root *root, int flag, char *error);
+
+void				mlx_draw_pixel(t_img *mlx_img, int x, int y, int color);
+unsigned int		mlx_rgb_to_int(int o, int r, int g, int b);
 
 int					**allocate_map(int nb_lines, int size_line);
 void				print_map(int **map, int nb_lines, int size_line);
