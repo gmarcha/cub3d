@@ -68,55 +68,6 @@ static void	update(t_root *root)
 		exit(1);
 }
 
-int	key_hook(int keycode, t_root *root)
-{
-	double			tmp;
-
-	printf("Print keycode: %d\n", keycode);
-	if (keycode == 65307)
-	{
-		destroy(root, 4, 0);
-		exit(0);
-	}
-	if (keycode == 119)
-	{
-		if (root->map[(int)(root->pos_x + root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
-			root->pos_x += root->dir_x * MOVE_SPEED;
-		if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y) * MOVE_SPEED] != 1)
-			root->pos_y += root->dir_y * MOVE_SPEED;
-	}
-	if (keycode == 115)
-	{
-		if (root->map[(int)(root->pos_x - root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
-			root->pos_x -= root->dir_x * MOVE_SPEED;
-		if (root->map[(int)root->pos_x][(int)(root->pos_y - root->dir_y) * MOVE_SPEED] != 1)
-			root->pos_y -= root->dir_y * MOVE_SPEED;
-	}
-	// if (keycode == 97) {};
-	// if (keycode == 100) {};
-	if (keycode == 65361)
-	{
-		tmp = root->dir_x;
-		root->dir_x = tmp * cos(ROTATION_SPEED) - root->dir_y * sin(ROTATION_SPEED);
-		root->dir_y = tmp * sin(ROTATION_SPEED) + root->dir_y * cos(ROTATION_SPEED);
-		tmp = root->plane_x;
-		root->plane_x = tmp * cos(ROTATION_SPEED) - root->plane_y * sin(ROTATION_SPEED);
-		root->plane_y = tmp * sin(ROTATION_SPEED) + root->plane_y * cos(ROTATION_SPEED);
-	}
-	if (keycode == 65363)
-	{
-		tmp = root->dir_x;
-		root->dir_x = tmp * cos(-ROTATION_SPEED) - root->dir_y * sin(-ROTATION_SPEED);
-		root->dir_y = tmp * sin(-ROTATION_SPEED) + root->dir_y * cos(-ROTATION_SPEED);
-		tmp = root->plane_x;
-		root->plane_x = tmp * cos(-ROTATION_SPEED) - root->plane_y * sin(-ROTATION_SPEED);
-		root->plane_y = tmp * sin(-ROTATION_SPEED) + root->plane_y * cos(-ROTATION_SPEED);
-	}
-	if (draw_core(root) == 0)
-		exit(1);
-	return (1);
-}
-
 int	key_press(int keycode, t_root *root)
 {
 	if (keycode == 65307)
@@ -157,6 +108,53 @@ int	key_release(int keycode, t_root *root)
 	update(root);
 	return (1);
 }
+
+// int	key_hook(int keycode, t_root *root)
+// {
+// 	double			tmp;
+
+// 	printf("Print keycode: %d\n", keycode);
+// 	if (keycode == 65307)
+// 	{
+// 		destroy(root, 4, 0);
+// 		exit(0);
+// 	}
+// 	if (keycode == 119)
+// 	{
+// 		if (root->map[(int)(root->pos_x + root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
+// 			root->pos_x += root->dir_x * MOVE_SPEED;
+// 		if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y) * MOVE_SPEED] != 1)
+// 			root->pos_y += root->dir_y * MOVE_SPEED;
+// 	}
+// 	if (keycode == 115)
+// 	{
+// 		if (root->map[(int)(root->pos_x - root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
+// 			root->pos_x -= root->dir_x * MOVE_SPEED;
+// 		if (root->map[(int)root->pos_x][(int)(root->pos_y - root->dir_y) * MOVE_SPEED] != 1)
+// 			root->pos_y -= root->dir_y * MOVE_SPEED;
+// 	}
+// 	if (keycode == 65361)
+// 	{
+// 		tmp = root->dir_x;
+// 		root->dir_x = tmp * cos(ROTATION_SPEED) - root->dir_y * sin(ROTATION_SPEED);
+// 		root->dir_y = tmp * sin(ROTATION_SPEED) + root->dir_y * cos(ROTATION_SPEED);
+// 		tmp = root->plane_x;
+// 		root->plane_x = tmp * cos(ROTATION_SPEED) - root->plane_y * sin(ROTATION_SPEED);
+// 		root->plane_y = tmp * sin(ROTATION_SPEED) + root->plane_y * cos(ROTATION_SPEED);
+// 	}
+// 	if (keycode == 65363)
+// 	{
+// 		tmp = root->dir_x;
+// 		root->dir_x = tmp * cos(-ROTATION_SPEED) - root->dir_y * sin(-ROTATION_SPEED);
+// 		root->dir_y = tmp * sin(-ROTATION_SPEED) + root->dir_y * cos(-ROTATION_SPEED);
+// 		tmp = root->plane_x;
+// 		root->plane_x = tmp * cos(-ROTATION_SPEED) - root->plane_y * sin(-ROTATION_SPEED);
+// 		root->plane_y = tmp * sin(-ROTATION_SPEED) + root->plane_y * cos(-ROTATION_SPEED);
+// 	}
+// 	if (draw_core(root) == 0)
+// 		exit(1);
+// 	return (1);
+// }
 
 int	main(int argc, char *argv[])
 {
