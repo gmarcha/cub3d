@@ -2,7 +2,7 @@ NAME		=	cub3d
 LFT			=	libft/libft.a
 MLX			=	mlx/Makefile.gen
 CC			=	clang
-FLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -O3
 INC			=	-I ./inc -I ./libft -I ./mlx
 LIB			=	-L ./libft -lft -L ./mlx -lmlx -lXext -lX11 -lm -lbsd
 OBJ			=	$(patsubst src%, obj%, $(SRC:.c=.o))
@@ -41,7 +41,7 @@ all:		$(MLX) $(LFT) obj $(NAME)
 $(NAME):	$(OBJ)
 			@echo "$(CLR)$(NAME): compilation done"
 			@echo "$(NAME): linking object files\r\c"
-			@$(CC) $(FLAGS) -fsanitize=address -o $@ $^ $(LIB)
+			@$(CC) $(CFLAGS) -fsanitize=address -o $@ $^ $(LIB)
 			@echo "$(CLR)$(NAME): link done"
 
 $(LFT):
@@ -56,7 +56,7 @@ $(MLX):
 
 obj/%.o:	src/%.c
 			@echo "$(CLR)$(NAME): compiling $<\r\c"
-			@$(CC) $(FLAGS) $(INC) -o $@ -c $<
+			@$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 obj:
 			@mkdir -p obj
