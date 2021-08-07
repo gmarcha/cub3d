@@ -17,6 +17,12 @@ t_root	*root_init(void)
 	root->floor_color = -1;
 	root->ceil_color = -1;
 	root->map = 0;
+	root->move_up = 0;
+	root->move_down = 0;
+	root->move_left = 0;
+	root->move_right = 0;
+	root->rotate_left = 0;
+	root->rotate_right = 0;
 	root->mlx = mlx_init();
 	if (root->mlx == 0)
 		return (destroy(root, 2, "error: can't init mlx"));
