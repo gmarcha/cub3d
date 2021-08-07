@@ -87,7 +87,6 @@ int	key_press(int keycode, t_root *root)
 		root->rotate_left = 1;
 	else if (keycode == 65363)
 		root->rotate_right = 1;
-	update(root);
 	return (1);
 }
 
@@ -106,6 +105,11 @@ int	key_release(int keycode, t_root *root)
 	else if (keycode == 65363)
 		root->rotate_right = 0;
 	return (1);
+}
+
+int	no_event(t_root *root)
+{
+	update(root);
 }
 
 int	main(int argc, char *argv[])
@@ -127,6 +131,7 @@ int	main(int argc, char *argv[])
 	mlx_hook(root->mlx_win, 2, 1L << 0, key_press, root);
 	mlx_hook(root->mlx_win, 3, 1L << 1, key_release, root);
 	// mlx_hook(root->mlx_win, 17, 1L << 17, destroy_hook, root);
+	mlx_loop_hook(root->mlx_win, no_event, root);
 	mlx_loop(root->mlx);
 	return (0);
 }
