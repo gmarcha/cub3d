@@ -2,18 +2,18 @@
 
 void	move_up(t_root *root)
 {
-	if (root->map[(int)((root->pos_x + root->dir_x) * MOVE_SPEED)][(int)root->pos_y] != 1)
-		root->pos_x += root->dir_x * MOVE_SPEED;
-	if (root->map[(int)root->pos_x][(int)((root->pos_y + root->dir_y) * MOVE_SPEED)] != 1)
-		root->pos_y += root->dir_y * MOVE_SPEED;
+	if (root->map[(int)(root->pos_x + root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
+		root->pos_x += root->dir_x * MOVE_SPEED / 10;
+	if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y) * MOVE_SPEED] != 1)
+		root->pos_y += root->dir_y * MOVE_SPEED / 10;
 }
 
 void	move_down(t_root *root)
 {
-	if (root->map[(int)((root->pos_x - root->dir_x) * MOVE_SPEED)][(int)root->pos_y] != 1)
-		root->pos_x -= root->dir_x * MOVE_SPEED;
-	if (root->map[(int)root->pos_x][(int)((root->pos_y - root->dir_y) * MOVE_SPEED)] != 1)
-		root->pos_y -= root->dir_y * MOVE_SPEED;
+	if (root->map[(int)(root->pos_x - root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
+		root->pos_x -= root->dir_x * MOVE_SPEED / 10;
+	if (root->map[(int)root->pos_x][(int)(root->pos_y - root->dir_y) * MOVE_SPEED] != 1)
+		root->pos_y -= root->dir_y * MOVE_SPEED / 10;
 }
 
 void	move_left(t_root *root)
@@ -80,16 +80,16 @@ int	key_hook(int keycode, t_root *root)
 	}
 	if (keycode == 119)
 	{
-		if (root->map[(int)((root->pos_x + root->dir_x) * MOVE_SPEED)][(int)root->pos_y] != 1)
+		if (root->map[(int)(root->pos_x + root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
 			root->pos_x += root->dir_x * MOVE_SPEED;
-		if (root->map[(int)root->pos_x][(int)((root->pos_y + root->dir_y) * MOVE_SPEED)] != 1)
+		if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y) * MOVE_SPEED] != 1)
 			root->pos_y += root->dir_y * MOVE_SPEED;
 	}
 	if (keycode == 115)
 	{
-		if (root->map[(int)((root->pos_x - root->dir_x) * MOVE_SPEED)][(int)root->pos_y] != 1)
+		if (root->map[(int)(root->pos_x - root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
 			root->pos_x -= root->dir_x * MOVE_SPEED;
-		if (root->map[(int)root->pos_x][(int)((root->pos_y - root->dir_y) * MOVE_SPEED)] != 1)
+		if (root->map[(int)root->pos_x][(int)(root->pos_y - root->dir_y) * MOVE_SPEED] != 1)
 			root->pos_y -= root->dir_y * MOVE_SPEED;
 	}
 	// if (keycode == 97) {};
