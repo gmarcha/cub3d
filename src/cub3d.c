@@ -88,6 +88,7 @@ int	key_press(int keycode, t_root *root)
 	else if (keycode == 65363)
 		root->rotate_right = 1;
 	update(root);
+	mlx_flush_event(root->mlx);
 	return (1);
 }
 
@@ -105,56 +106,8 @@ int	key_release(int keycode, t_root *root)
 		root->rotate_left = 0;
 	else if (keycode == 65363)
 		root->rotate_right = 0;
-	update(root);
 	return (1);
 }
-
-// int	key_hook(int keycode, t_root *root)
-// {
-// 	double			tmp;
-
-// 	printf("Print keycode: %d\n", keycode);
-// 	if (keycode == 65307)
-// 	{
-// 		destroy(root, 4, 0);
-// 		exit(0);
-// 	}
-// 	if (keycode == 119)
-// 	{
-// 		if (root->map[(int)(root->pos_x + root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
-// 			root->pos_x += root->dir_x * MOVE_SPEED;
-// 		if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y) * MOVE_SPEED] != 1)
-// 			root->pos_y += root->dir_y * MOVE_SPEED;
-// 	}
-// 	if (keycode == 115)
-// 	{
-// 		if (root->map[(int)(root->pos_x - root->dir_x) * MOVE_SPEED][(int)root->pos_y] != 1)
-// 			root->pos_x -= root->dir_x * MOVE_SPEED;
-// 		if (root->map[(int)root->pos_x][(int)(root->pos_y - root->dir_y) * MOVE_SPEED] != 1)
-// 			root->pos_y -= root->dir_y * MOVE_SPEED;
-// 	}
-// 	if (keycode == 65361)
-// 	{
-// 		tmp = root->dir_x;
-// 		root->dir_x = tmp * cos(ROTATION_SPEED) - root->dir_y * sin(ROTATION_SPEED);
-// 		root->dir_y = tmp * sin(ROTATION_SPEED) + root->dir_y * cos(ROTATION_SPEED);
-// 		tmp = root->plane_x;
-// 		root->plane_x = tmp * cos(ROTATION_SPEED) - root->plane_y * sin(ROTATION_SPEED);
-// 		root->plane_y = tmp * sin(ROTATION_SPEED) + root->plane_y * cos(ROTATION_SPEED);
-// 	}
-// 	if (keycode == 65363)
-// 	{
-// 		tmp = root->dir_x;
-// 		root->dir_x = tmp * cos(-ROTATION_SPEED) - root->dir_y * sin(-ROTATION_SPEED);
-// 		root->dir_y = tmp * sin(-ROTATION_SPEED) + root->dir_y * cos(-ROTATION_SPEED);
-// 		tmp = root->plane_x;
-// 		root->plane_x = tmp * cos(-ROTATION_SPEED) - root->plane_y * sin(-ROTATION_SPEED);
-// 		root->plane_y = tmp * sin(-ROTATION_SPEED) + root->plane_y * cos(-ROTATION_SPEED);
-// 	}
-// 	if (draw_core(root) == 0)
-// 		exit(1);
-// 	return (1);
-// }
 
 int	main(int argc, char *argv[])
 {
@@ -171,7 +124,6 @@ int	main(int argc, char *argv[])
 	print_map(root->map, root->nb_lines + 1, root->size_line + 1);
 	if (draw_core(root) == 0)
 		return (1);
-	// mlx_hook(root->mlx_win, 2, (1L << 0), &key_hook, root);
 	mlx_hook(root->mlx_win, 2, 1L << 0, key_press, root);
 	mlx_hook(root->mlx_win, 3, 1L << 1, key_release, root);
 	// mlx_hook(root->mlx_win, 17, 1L << 17, destroy_hook, root);
