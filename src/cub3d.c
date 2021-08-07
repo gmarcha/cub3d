@@ -110,6 +110,7 @@ int	key_release(int keycode, t_root *root)
 int	no_event(t_root *root)
 {
 	update(root);
+	return (1);
 }
 
 int	main(int argc, char *argv[])
