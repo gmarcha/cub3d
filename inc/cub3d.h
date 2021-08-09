@@ -17,7 +17,7 @@
 # define SCREEN_HEIGHT	1080
 
 # define MOVE_SPEED		1
-# define ROTATION_SPEED	1
+# define ROTATION_SPEED	0.5
 
 typedef struct s_root
 {
@@ -27,7 +27,6 @@ typedef struct s_root
 	int				width;
 	int				height;
 	t_img			*walls_texture[4];
-	t_img			*sprite_texture;
 	int				floor_color;
 	int				ceil_color;
 	int				**map;
@@ -45,7 +44,7 @@ typedef struct s_root
 	int				move_right;
 	int				rotate_left;
 	int				rotate_right;
-}				t_root;
+}					t_root;
 
 typedef struct s_ray
 {
@@ -69,58 +68,40 @@ typedef struct s_ray
 	int				text_y;
 	double			text_pos;
 	double			text_step;
-}				t_ray;
+}					t_ray;
 
 ///  ////////////////////////////////////////////////////  ///
 ///  ///          INPUT PARSING AND CHECKING          ///  ///
 ///  ////////////////////////////////////////////////////  ///
 
-t_root				*check_info(t_root *root);
-
-t_root				*check_map(t_root *root, char c, int *max, int *player);
-
-int					fill_map(t_root *root, int i, int j, char c);
-
-int					**init_map(t_root *root, char *buf);
-
-t_root				*init_scene(char *file);
-
 t_root				*init(char *file);
-
-t_root				*parse_color(t_root *root, char **buf, int *floor);
-
-t_root				*parse_info(t_root *root, char **buf);
-
-t_root				*parse_map(t_root *root, char *buf);
-
-t_root				*parse_resolution(t_root *root, char **buf);
-
+t_root				*init_scene(char *file);
 t_root				*parse_scene(char *buf);
 
-t_root				*parse_texture(t_root *root, char **buf, t_img **img);
-
-t_root				*parse_value(t_root *root, char **buf);
-
-t_root				*parse_wall(t_root *root, char **buf);
-
 t_root				*root_init(void);
+t_root				*parse_info(t_root *root, char **buf);
+t_root				*parse_wall(t_root *root, char **buf);
+t_root				*parse_texture(t_root *root, char **buf, t_img **img);
+t_root				*parse_value(t_root *root, char **buf);
+t_root				*parse_color(t_root *root, char **buf, int *floor);
+t_root				*check_info(t_root *root);
 
+int					**init_map(t_root *root, char *buf);
 t_root				*size_map(t_root *root, char *buf);
-
+t_root				*check_map(t_root *root, char c, int *max, int *player);
+t_root				*parse_map(t_root *root, char *buf);
+int					fill_map(t_root *root, int i, int j, char c);
 t_root				*valid_map(t_root *root, int **map);
+
 
 ///  //////////////////////////////////////////////  ///
 ///  ///          RAYCASTING MECHANISM          ///  ///
 ///  //////////////////////////////////////////////  ///
 
 t_ray				*ray_casting(t_root *root, t_ray *ray);
-
 t_ray				*ray_core(t_root *root, int i);
-
 t_ray				*ray_dist(t_root *root, t_ray *ray);
-
 t_ray				*ray_init(t_root *root, int i);
-
 t_ray				*ray_texture(t_root *root, t_ray *ray);
 
 ///  ////////////////////////////////////////  ///
@@ -128,26 +109,33 @@ t_ray				*ray_texture(t_root *root, t_ray *ray);
 ///  ////////////////////////////////////////  ///
 
 t_root				*draw_core(t_root *root);
-
 void				draw_env(t_root *r, t_ray *ray, int i);
 
 ///  ////////////////////////////////////////  ///
 ///  ///          EVENT HANDLING          ///  ///
 ///  ////////////////////////////////////////  ///
 
+void				update(t_root *root);
+int					key_press(int keycode, t_root *root);
+int					key_release(int keycode, t_root *root);
+int					button_destroy(int keycode, t_root *root);
+void				move_up(t_root *root);
+void				move_down(t_root *root);
+void				move_left(t_root *root);
+void				move_right(t_root *root);
+void				rotate_left(t_root *root);
+void				rotate_right(t_root *root);
+
+
 ///  ////////////////////////////////////////  ///
 ///  ///          UTIL FUNCTIONS          ///  ///
 ///  ////////////////////////////////////////  ///
 
+int					**allocate_map(int nb_lines, int size_line);
+void				*destroy(t_root *root, int flag, char *error);
 void				*free_matrix(int **matrix, int size);
 void				free_root(t_root *root);
-void				*destroy(t_root *root, int flag, char *error);
-
 void				mlx_draw_pixel(t_img *mlx_img, int x, int y, int color);
 unsigned int		mlx_rgb_to_int(int o, int r, int g, int b);
-
-int					**allocate_map(int nb_lines, int size_line);
-void				print_map(int **map, int nb_lines, int size_line);
-void				draw_square(t_img *img, int color);
 
 #endif
