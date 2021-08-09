@@ -2,7 +2,7 @@
 
 t_root	*check_map(t_root *root, char c, int *max, int *player)
 {
-	if (c != 32 && (c < '0' || c > '2'))
+	if (c != 32 && (c < '0' || c > '1'))
 	{
 		if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 		{

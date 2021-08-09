@@ -17,9 +17,7 @@ t_root	*valid_map(t_root *root, int **map)
 					return (destroy(root, 2, "error: invalid map"));
 			if (map[i][j] == -1)
 				if (map[i - 1][j] == 0 || map[i + 1][j] == 0
-				|| map[i][j - 1] == 0 || map[i][j + 1] == 0
-				|| map[i - 1][j] == 2 || map[i + 1][j] == 2
-				|| map[i][j - 1] == 2 || map[i][j + 1] == 2)
+				|| map[i][j - 1] == 0 || map[i][j + 1] == 0)
 					return (destroy(root, 2, "error: invalid map"));
 		}
 	}

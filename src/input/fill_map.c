@@ -19,8 +19,6 @@ int	fill_map(t_root *root, int i, int j, char c)
 		root->map[i][j] = 0;
 	if (c == '1')
 		root->map[i][j] = 1;
-	if (c == '2')
-		root->map[i][j] = 2;
 	if (c == 0 || c == '\n' || c == ' ')
 		root->map[i][j] = -1;
 	if (c && c != '\n')
