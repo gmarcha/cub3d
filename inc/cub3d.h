@@ -13,8 +13,8 @@
 # include "mlx_int.h"
 # include "libft.h"
 
-# define SCREEN_WIDTH	1920
-# define SCREEN_HEIGHT	1080
+# define SCREEN_WIDTH	640
+# define SCREEN_HEIGHT	360
 
 # define MOVE_SPEED		1
 # define ROTATION_SPEED	0.5
