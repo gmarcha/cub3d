@@ -8,6 +8,8 @@ void	draw_env(t_root *r, t_ray *ray, int i)
 
 	img = r->walls_texture[ray->card];
 	j = 0;
+	if (r->player_orientation == SOUTH || r->player_orientation == EAST)
+		i = SCREEN_WIDTH - i - 1;
 	while (j < ray->wall_start)
 	{
 		mlx_draw_pixel(r->mlx_img, i, j, r->ceil_color);
