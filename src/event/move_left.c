@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_left.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:38:03 by user42            #+#    #+#             */
-/*   Updated: 2021/08/18 19:38:04 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/19 01:51:27 by gamarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,8 @@
 
 void	move_left(t_root *root)
 {
-	(void)root;
+	if (root->map[(int)(root->pos_x - root->plane_x) * MOVE_SPEED][(int)root->pos_y] != 1)
+		root->pos_x -= root->plane_x * MOVE_SPEED;
+	if (root->map[(int)root->pos_x][(int)(root->pos_y - root->plane_y) * MOVE_SPEED] != 1)
+		root->pos_y -= root->plane_y * MOVE_SPEED;
 }
