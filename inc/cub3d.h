@@ -19,6 +19,11 @@
 # define MOVE_SPEED		1
 # define ROTATION_SPEED	0.5
 
+# define NORTH			0
+# define SOUTH			2
+# define EAST			1
+# define WEST			3
+
 typedef struct s_root
 {
 	void			*mlx;
@@ -32,6 +37,7 @@ typedef struct s_root
 	int				**map;
 	int				nb_lines;
 	int				size_line;
+	int				player_orientation;
 	double			pos_x;
 	double			pos_y;
 	double			dir_x;
