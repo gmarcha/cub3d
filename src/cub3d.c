@@ -29,6 +29,27 @@ static int	invalid_args(int ac, char *av[])
 	return (0);
 }
 
+void	print_map(int **map, int nb_lines, int size_line)
+{
+	int				i;
+	int				j;
+
+	i = 0;
+	while (++i < nb_lines)
+	{
+		j = 0;
+		while (++j < size_line)
+		{
+			if (map[i][j] == 1)
+				printf("X");
+			else
+				printf(" ");
+		}
+		printf("\n");
+	}
+	printf("\n============================================================\n");
+}
+
 int	main(int ac, char *av[])
 {
 	t_root			*root;
@@ -38,6 +59,7 @@ int	main(int ac, char *av[])
 	root = init(av[1]);
 	if (root == 0)
 		return (EXIT_FAILURE);
+	print_map(root->map, root->nb_lines, root->size_line);
 	if (draw_core(root) == 0)
 		return (EXIT_FAILURE);
 	mlx_do_sync(root->mlx);
