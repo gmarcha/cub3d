@@ -9,9 +9,9 @@ t_root	*init(char *file)
 		return (0);
 	r->mlx_win = mlx_new_window(r->mlx, r->width, r->height, "cub3d");
 	if (r->mlx_win == 0)
-		return (destroy(r, 2, "error: can't create a new window"));
+		return (destroy(r, 2, "Error\nCan't create a new window"));
 	r->mlx_img = mlx_new_image(r->mlx, r->width, r->height);
 	if (r->mlx_img == 0)
-		return (destroy(r, 3, "error: can't create a new image"));
+		return (destroy(r, 3, "Error\nCan't create a new image"));
 	return (r);
 }

@@ -7,7 +7,7 @@ t_root	*root_init(void)
 
 	root = (t_root *)malloc(sizeof(t_root));
 	if (root == 0)
-		return (destroy(root, 0, "error: can't allocate memory"));
+		return (destroy(root, 0, "Error\nCan't allocate memory"));
 	root->width = SCREEN_WIDTH;
 	root->height = SCREEN_HEIGHT;
 	i = 0;
@@ -24,6 +24,6 @@ t_root	*root_init(void)
 	root->rotate_right = 0;
 	root->mlx = mlx_init();
 	if (root->mlx == 0)
-		return (destroy(root, 2, "error: can't init mlx"));
+		return (destroy(root, 2, "Error\nCan't init mlx"));
 	return (root);
 }

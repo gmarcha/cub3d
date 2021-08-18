@@ -10,7 +10,7 @@ t_root	*draw_core(t_root *root)
 	{
 		ray = ray_core(root, i);
 		if (ray == 0)
-			return (destroy(root, 4, "error: can't draw"));
+			return (destroy(root, 4, "Error\nCan't draw"));
 		draw_env(root, ray, i);
 		free(ray);
 		i++;

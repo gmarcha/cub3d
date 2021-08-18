@@ -17,9 +17,9 @@ static char	*read_file(int fd)
 
 	ret = read(fd, buf, 4096);
 	if (ret == -1)
-		return (destroy(0, 0, "error: can't read the .cub file"));
+		return (destroy(0, 0, "Error\nCan't read the .cub file"));
 	if (ret == 0)
-		return (destroy(0, 0, "error: scene file is empty"));
+		return (destroy(0, 0, "Error\nScene file is empty"));
 	file_content = NULL;
 	while (ret != 0)
 	{
@@ -29,7 +29,7 @@ static char	*read_file(int fd)
 		else
 			file_content = join_buf(file_content, buf);
 		if (file_content == NULL)
-			return (destroy(0, 0, "error: .cub file reading failed"));
+			return (destroy(0, 0, "Error\n.cub file reading failed"));
 		ret = read(fd, buf, 4096);
 	}
 	return (file_content);
@@ -43,7 +43,7 @@ t_root	*init_scene(char *file_name)
 
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
-		return (destroy(0, 0, "error: can't open the .cub file"));
+		return (destroy(0, 0, "Error\nCan't open the .cub file"));
 	file_content = read_file(fd);
 	close(fd);
 	if (file_content == 0)

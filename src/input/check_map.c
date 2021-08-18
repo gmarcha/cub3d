@@ -7,11 +7,11 @@ t_root	*check_map(t_root *root, char c, int *max, int *player)
 		if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 		{
 			if (*player)
-				return (destroy(root, 2, "error: too much player in map"));
+				return (destroy(root, 2, "Error\nToo much player in map"));
 			(*player)++;
 		}
 		else
-			return (destroy(root, 2, "error: invalid character in map"));
+			return (destroy(root, 2, "Error\nInvalid character in map"));
 	}
 	(*max)++;
 	return (root);

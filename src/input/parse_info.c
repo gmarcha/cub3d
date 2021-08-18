@@ -18,5 +18,5 @@ t_root	*parse_info(t_root *root, char **buf)
 			return (0);
 		return (root);
 	}
-	return (destroy(root, 2, "error: wrong identifier"));
+	return (destroy(root, 2, "Error\nWrong identifier"));
 }

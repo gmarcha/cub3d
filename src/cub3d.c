@@ -18,12 +18,12 @@ static int	invalid_args(int ac, char *av[])
 {
 	if (ac != 2)
 	{
-		ft_putendl_fd("error: invalid number of arguments", 2);
+		ft_putendl_fd("Error\nInvalid number of arguments", 2);
 		return (-1);
 	}
 	if (iscub(av[1]) == 0)
 	{
-		ft_putendl_fd("error: invalid extension to .cub file", 2);
+		ft_putendl_fd("Error\nInvalid extension to .cub file", 2);
 		return (-1);
 	}
 	return (0);
