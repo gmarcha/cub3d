@@ -8,7 +8,8 @@ LIB			=	-L ./libft -lft -L ./mlx -lmlx -lXext -lX11 -lm -lbsd
 OBJ			=	$(patsubst src%, obj%, $(SRC:.c=.o))
 SRC			=	src/draw/draw_core.c \
 				src/draw/draw_env.c \
-				src/event/key_destroy.c \
+				src/engine/loop_routine.c \
+				src/engine/update.c \
 				src/event/key_press.c \
 				src/event/key_release.c \
 				src/event/move_down.c \
@@ -17,7 +18,6 @@ SRC			=	src/draw/draw_core.c \
 				src/event/move_up.c \
 				src/event/rotate_left.c \
 				src/event/rotate_right.c \
-				src/event/update.c \
 				src/input/check_info.c \
 				src/input/check_map.c \
 				src/input/fill_map.c \
@@ -73,6 +73,7 @@ obj/%.o:	src/%.c
 obj:
 			@mkdir -p obj
 			@mkdir -p obj/draw
+			@mkdir -p obj/engine
 			@mkdir -p obj/event
 			@mkdir -p obj/input
 			@mkdir -p obj/ray
