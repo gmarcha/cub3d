@@ -8,7 +8,7 @@ LIB			=	-L ./libft -lft -L ./mlx -lmlx -lXext -lX11 -lm -lbsd
 OBJ			=	$(patsubst src%, obj%, $(SRC:.c=.o))
 SRC			=	src/draw/draw_core.c \
 				src/draw/draw_env.c \
-				src/event/button_destroy.c \
+				src/event/key_destroy.c \
 				src/event/key_press.c \
 				src/event/key_release.c \
 				src/event/move_down.c \
