@@ -21,12 +21,31 @@ static char	*join_buf(char *file, char *buf)
 	return (tmp);
 }
 
+static char	*handle_infinite_input(char **file_content, char buf[], size_t i)
+{
+	if (i > 1000)
+	{
+		free(*file_content);
+		return (destroy(0, 0, "Error\n/dev/random, "
+				"/dev/urandom or /dev/arandom are invalid files"));
+	}
+	if (*file_content == NULL)
+		*file_content = ft_strdup(buf);
+	else
+		*file_content = join_buf(*file_content, buf);
+	if (*file_content == NULL)
+		return (destroy(0, 0, "Error\n.cub file reading failed"));
+	return (*file_content);
+}
+
 static char	*read_file(int fd)
 {
 	char			*file_content;
 	char			buf[4096 + 1];
 	int				ret;
+	size_t			i;
 
+	i = 0;
 	ret = read(fd, buf, 4096);
 	if (ret == -1)
 		return (destroy(0, 0, "Error\nCan't read the .cub file"));
@@ -36,12 +55,9 @@ static char	*read_file(int fd)
 	while (ret != 0)
 	{
 		buf[ret] = 0;
-		if (file_content == NULL)
-			file_content = ft_strdup(buf);
-		else
-			file_content = join_buf(file_content, buf);
-		if (file_content == NULL)
-			return (destroy(0, 0, "Error\n.cub file reading failed"));
+		i++;
+		if (handle_infinite_input(&file_content, buf, i) == NULL)
+			return (NULL);
 		ret = read(fd, buf, 4096);
 	}
 	return (file_content);

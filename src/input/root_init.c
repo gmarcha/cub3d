@@ -12,6 +12,22 @@
 
 #include "cub3d.h"
 
+static void	player_mov_init(t_root *root)
+{
+	root->move_up = 0;
+	root->move_down = 0;
+	root->move_left = 0;
+	root->move_right = 0;
+	root->speed_up = 1;
+	root->speed_down = 1;
+	root->speed_left = 1;
+	root->speed_right = 1;
+	root->rotate_left = 0;
+	root->rotate_right = 0;
+	root->velocity_left = 1;
+	root->velocity_right = 1;
+}
+
 t_root	*root_init(void)
 {
 	t_root			*root;
@@ -28,12 +44,7 @@ t_root	*root_init(void)
 	root->floor_color = -1;
 	root->ceil_color = -1;
 	root->map = 0;
-	root->move_up = 0;
-	root->move_down = 0;
-	root->move_left = 0;
-	root->move_right = 0;
-	root->rotate_left = 0;
-	root->rotate_right = 0;
+	player_mov_init(root);
 	root->mlx = mlx_init();
 	if (root->mlx == 0)
 		return (destroy(root, 2, "Error\nCan't init mlx"));
