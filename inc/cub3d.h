@@ -28,9 +28,6 @@
 # define SCREEN_WIDTH	640
 # define SCREEN_HEIGHT	360
 
-# define MOVE_SPEED		1
-# define ROTATION_SPEED	0.5
-
 # define NORTH			0
 # define SOUTH			2
 # define EAST			1
@@ -111,15 +108,14 @@ t_root				*parse_map(t_root *root, char *buf);
 int					fill_map(t_root *root, int i, int j, char c);
 t_root				*valid_map(t_root *root, int **map);
 
-
 ///  //////////////////////////////////////////////  ///
 ///  ///          RAYCASTING MECHANISM          ///  ///
 ///  //////////////////////////////////////////////  ///
 
-t_ray				*ray_casting(t_root *root, t_ray *ray);
 t_ray				*ray_core(t_root *root, int i);
-t_ray				*ray_dist(t_root *root, t_ray *ray);
 t_ray				*ray_init(t_root *root, int i);
+t_ray				*ray_dist(t_root *root, t_ray *ray);
+t_ray				*ray_casting(t_root *root, t_ray *ray);
 t_ray				*ray_texture(t_root *root, t_ray *ray);
 
 ///  ////////////////////////////////////////  ///
@@ -143,7 +139,6 @@ void				move_left(t_root *root);
 void				move_right(t_root *root);
 void				rotate_left(t_root *root);
 void				rotate_right(t_root *root);
-
 
 ///  ////////////////////////////////////////  ///
 ///  ///          UTIL FUNCTIONS          ///  ///
