@@ -6,16 +6,26 @@
 /*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:38:03 by user42            #+#    #+#             */
-/*   Updated: 2021/08/19 01:51:27 by gamarcha         ###   ########.fr       */
+/*   Updated: 2021/08/19 03:16:10 by gamarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	move_left(t_root *root)
+void	move_left(t_root *r)
 {
-	if (root->map[(int)(root->pos_x - root->plane_x) * MOVE_SPEED][(int)root->pos_y] != 1)
-		root->pos_x -= root->plane_x * MOVE_SPEED;
-	if (root->map[(int)root->pos_x][(int)(root->pos_y - root->plane_y) * MOVE_SPEED] != 1)
-		root->pos_y -= root->plane_y * MOVE_SPEED;
+	if (r->player_orientation == SOUTH || r->player_orientation == EAST)
+	{
+		if (r->map[(int)(r->pos_x + r->plane_x)][(int)r->pos_y] != 1)
+			r->pos_x += r->plane_x;
+		if (r->map[(int)r->pos_x][(int)(r->pos_y + r->plane_y)] != 1)
+			r->pos_y += r->plane_y;
+	}
+	else
+	{
+		if (r->map[(int)(r->pos_x - r->plane_x)][(int)r->pos_y] != 1)
+			r->pos_x -= r->plane_x;
+		if (r->map[(int)r->pos_x][(int)(r->pos_y - r->plane_y)] != 1)
+			r->pos_y -= r->plane_y;
+	}
 }

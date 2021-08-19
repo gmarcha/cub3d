@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   key_press.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:37:48 by user42            #+#    #+#             */
-/*   Updated: 2021/08/18 19:37:49 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/19 03:25:43 by gamarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	setup_movement(t_root *root, int *move)
+{
+	*move = 1;
+	update(root);
+}
 
 int	key_press(int keycode, t_root *root)
 {
@@ -20,34 +26,16 @@ int	key_press(int keycode, t_root *root)
 		exit(0);
 	}
 	if (keycode == 119)
-	{
-		root->move_up = 1;
-		update(root);
-	}
+		setup_movement(root, &root->move_up);
 	else if (keycode == 115)
-	{
-		root->move_down = 1;
-		update(root);
-	}
+		setup_movement(root, &root->move_down);
 	else if (keycode == 97)
-	{
-		root->move_left = 1;
-		update(root);
-	}
+		setup_movement(root, &root->move_left);
 	else if (keycode == 100)
-	{
-		root->move_right = 1;
-		update(root);
-	}
+		setup_movement(root, &root->move_right);
 	else if (keycode == 65361)
-	{
-		root->rotate_left = 1;
-		update(root);
-	}
+		setup_movement(root, &root->rotate_left);
 	else if (keycode == 65363)
-	{
-		root->rotate_right = 1;
-		update(root);
-	}
+		setup_movement(root, &root->rotate_right);
 	return (1);
 }

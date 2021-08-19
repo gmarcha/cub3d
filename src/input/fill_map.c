@@ -12,6 +12,34 @@
 
 #include "cub3d.h"
 
+static void	setup_south(t_root *root)
+{
+	root->player_orientation = SOUTH;
+	root->dir_x = 1;
+	root->plane_y = 0.8;
+}
+
+static void	setup_north(t_root *root)
+{
+	root->player_orientation = NORTH;
+	root->dir_x = -1;
+	root->plane_y = 0.8;
+}
+
+static void	setup_east(t_root *root)
+{
+	root->player_orientation = EAST;
+	root->dir_y = -1;
+	root->plane_x = 0.8;
+}
+
+static void	setup_west(t_root *root)
+{
+	root->player_orientation = WEST;
+	root->dir_y = 1;
+	root->plane_x = 0.8;
+}
+
 int	fill_map(t_root *root, int i, int j, char c)
 {
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
@@ -19,29 +47,13 @@ int	fill_map(t_root *root, int i, int j, char c)
 		root->pos_x = i + 0.5;
 		root->pos_y = j + 0.5;
 		if (c == 'S')
-		{
-			root->player_orientation = SOUTH;
-			root->dir_x = 1;
-			root->plane_y = 0.8;
-		}
+			setup_south(root);
 		if (c == 'N')
-		{
-			root->player_orientation = NORTH;
-			root->dir_x = -1;
-			root->plane_y = 0.8;
-		}
+			setup_north(root);
 		if (c == 'E')
-		{
-			root->player_orientation = EAST;
-			root->dir_y = -1;
-			root->plane_x = 0.8;
-		}
+			setup_east(root);
 		if (c == 'W')
-		{
-			root->player_orientation = WEST;
-			root->dir_y = 1;
-			root->plane_x = 0.8;
-		}
+			setup_west(root);
 	}
 	if (c == '0')
 		root->map[i][j] = 0;
