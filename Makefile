@@ -53,7 +53,7 @@ all:		$(MLX) $(LFT) obj $(NAME)
 $(NAME):	$(OBJ)
 			@echo "$(CLR)$(NAME): compilation done"
 			@echo "$(NAME): linking object files\r\c"
-			@$(CC) $(CFLAGS) -fsanitize=address -o $@ $^ $(LIB)
+			@$(CC) $(CFLAGS) -o $@ $^ $(LIB)
 			@echo "$(CLR)$(NAME): link done"
 
 $(LFT):
