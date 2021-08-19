@@ -17,13 +17,13 @@ int	**allocate_map(int nb_lines, int size_line)
 	int				**map;
 	int				i;
 
-	map = (int **)malloc(sizeof(int *) * nb_lines);
+	map = (int **)ft_calloc(nb_lines, sizeof(int *));
 	if (map == 0)
 		return (0);
 	i = 0;
 	while (i < nb_lines)
 	{
-		map[i] = (int *)malloc(sizeof(int) * size_line);
+		map[i] = (int *)ft_calloc(size_line, sizeof(int));
 		if (map[i] == 0)
 			return (free_matrix(map, i));
 		i++;
