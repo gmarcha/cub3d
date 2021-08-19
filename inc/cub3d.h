@@ -28,6 +28,9 @@
 # define SCREEN_WIDTH	640
 # define SCREEN_HEIGHT	360
 
+# define MOV_SPEED		0.001
+# define ROT_SPEED		0.002
+
 # define NORTH			0
 # define SOUTH			2
 # define EAST			1
@@ -57,8 +60,14 @@ typedef struct s_root
 	int				move_down;
 	int				move_left;
 	int				move_right;
+	int				speed_up;
+	int				speed_down;
+	int				speed_left;
+	int				speed_right;
 	int				rotate_left;
 	int				rotate_right;
+	int				velocity_left;
+	int				velocity_right;
 }					t_root;
 
 typedef struct s_ray
@@ -132,7 +141,7 @@ void				draw_env(t_root *r, t_ray *ray, int i);
 void				update(t_root *root);
 int					key_press(int keycode, t_root *root);
 int					key_release(int keycode, t_root *root);
-int					button_destroy(int keycode, t_root *root);
+int					key_destroy(int keycode, t_root *root);
 void				move_up(t_root *root);
 void				move_down(t_root *root);
 void				move_left(t_root *root);
