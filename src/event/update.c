@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:38:28 by user42            #+#    #+#             */
-/*   Updated: 2021/08/18 19:38:29 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/19 19:11:16 by gamarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,4 @@ void	update(t_root *root)
 		rotate_left(root);
 	if (root->rotate_right != 0)
 		rotate_right(root);
-	if (draw_core(root) == 0)
-		exit(1);
 }

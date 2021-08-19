@@ -6,7 +6,7 @@
 /*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:38:15 by user42            #+#    #+#             */
-/*   Updated: 2021/08/19 03:15:36 by gamarcha         ###   ########.fr       */
+/*   Updated: 2021/08/19 20:09:38 by gamarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 void	move_up(t_root *root)
 {
-	if (root->map[(int)(root->pos_x + root->dir_x)][(int)root->pos_y] != 1)
-		root->pos_x += root->dir_x;
-	if (root->map[(int)root->pos_x][(int)(root->pos_y + root->dir_y)] != 1)
-		root->pos_y += root->dir_y;
+	double			ratio;
+
+	ratio = MOV_SPEED * root->speed_up;
+	if (root->map[(int)((root->pos_x + root->dir_x))][(int)root->pos_y] != 1)
+		root->pos_x += root->dir_x * ratio;
+	if (root->map[(int)root->pos_x][(int)((root->pos_y + root->dir_y))] != 1)
+		root->pos_y += root->dir_y * ratio;
+	if (root->speed_up < 100)
+		root->speed_up++;
 }

@@ -6,7 +6,7 @@
 /*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:38:12 by user42            #+#    #+#             */
-/*   Updated: 2021/08/19 03:16:19 by gamarcha         ###   ########.fr       */
+/*   Updated: 2021/08/19 20:01:35 by gamarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,23 @@
 
 void	move_right(t_root *r)
 {
+	double			ratio;
+
+	ratio = MOV_SPEED * r->speed_right;
 	if (r->player_orientation == SOUTH || r->player_orientation == EAST)
 	{
 		if (r->map[(int)(r->pos_x - r->plane_x)][(int)r->pos_y] != 1)
-			r->pos_x -= r->plane_x;
+			r->pos_x -= r->plane_x * ratio;
 		if (r->map[(int)r->pos_x][(int)(r->pos_y - r->plane_y)] != 1)
-			r->pos_y -= r->plane_y;
+			r->pos_y -= r->plane_y * ratio;
 	}
 	else
 	{
 		if (r->map[(int)(r->pos_x + r->plane_x)][(int)r->pos_y] != 1)
-			r->pos_x += r->plane_x;
+			r->pos_x += r->plane_x * ratio;
 		if (r->map[(int)r->pos_x][(int)(r->pos_y + r->plane_y)] != 1)
-			r->pos_y += r->plane_y;
+			r->pos_y += r->plane_y * ratio;
 	}
+	if (r->speed_right < 100)
+		r->speed_right++;
 }

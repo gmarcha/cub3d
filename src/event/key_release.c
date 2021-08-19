@@ -3,28 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   key_release.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:37:55 by user42            #+#    #+#             */
-/*   Updated: 2021/08/18 19:38:06 by user42           ###   ########.fr       */
+/*   Updated: 2021/08/19 20:11:44 by gamarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+static void	reset_move(int *move, int *affec)
+{
+	*move = 0;
+	*affec = 1;
+}
+
 int	key_release(int keycode, t_root *root)
 {
 	if (keycode == 119)
-		root->move_up = 0;
+		reset_move(&root->move_up, &root->speed_up);
 	else if (keycode == 115)
-		root->move_down = 0;
+		reset_move(&root->move_down, &root->speed_down);
 	else if (keycode == 97)
-		root->move_left = 0;
+		reset_move(&root->move_left, &root->speed_left);
 	else if (keycode == 100)
-		root->move_right = 0;
+		reset_move(&root->move_right, &root->speed_right);
 	else if (keycode == 65361)
-		root->rotate_left = 0;
+		reset_move(&root->rotate_left, &root->velocity_left);
 	else if (keycode == 65363)
-		root->rotate_right = 0;
+		reset_move(&root->rotate_right, &root->velocity_right);
 	return (1);
 }
