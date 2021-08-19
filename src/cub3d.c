@@ -41,14 +41,6 @@ static int	invalid_args(int ac, char *av[])
 	return (0);
 }
 
-int	execution(t_root *root)
-{
-	if (draw_core(root) == NULL)
-		return (0);
-	update(root);
-	return (1);
-}
-
 int	main(int ac, char *av[])
 {
 	t_root			*root;
@@ -62,9 +54,10 @@ int	main(int ac, char *av[])
 	mlx_do_sync(root->mlx);
 	mlx_hook(root->mlx_win, 2, 1L << 0, key_press, root);
 	mlx_hook(root->mlx_win, 3, 1L << 1, key_release, root);
-	mlx_hook(root->mlx_win, 17, 1L << 17, key_destroy, root);
-	mlx_loop_hook(root->mlx, execution, root);
+	mlx_hook(root->mlx_win, 17, 1L << 17, mlx_loop_end, root->mlx);
+	mlx_loop_hook(root->mlx, loop_routine, root);
 	mlx_loop(root->mlx);
-	printf("AH DAMN\n");
+	mlx_do_key_autorepeaton(root->mlx);
+	destroy(root, 4, 0);
 	return (EXIT_SUCCESS);
 }
