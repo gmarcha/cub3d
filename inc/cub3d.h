@@ -127,6 +127,13 @@ t_ray				*ray_dist(t_root *root, t_ray *ray);
 t_ray				*ray_casting(t_root *root, t_ray *ray);
 t_ray				*ray_texture(t_root *root, t_ray *ray);
 
+///  /////////////////////////////////////////  ///
+///  ///          ENGINE HANDLING          ///  ///
+///  /////////////////////////////////////////  ///
+
+int					loop_routine(t_root *root);
+void				update(t_root *root);
+
 ///  ////////////////////////////////////////  ///
 ///  ///          DRAWING FRAMES          ///  ///
 ///  ////////////////////////////////////////  ///
@@ -138,7 +145,6 @@ void				draw_env(t_root *r, t_ray *ray, int i);
 ///  ///          EVENT HANDLING          ///  ///
 ///  ////////////////////////////////////////  ///
 
-void				update(t_root *root);
 int					key_press(int keycode, t_root *root);
 int					key_release(int keycode, t_root *root);
 int					key_destroy(int keycode, t_root *root);
