@@ -1,7 +1,6 @@
 INVALID_MAPS=(
 	map_empty_file_newline.cub
 	map_empty_file.cub
-	map_error.cub
 	map_invalid_character.cub
 	map_missing_ceil.cub
 	map_missing_east.cub
@@ -23,7 +22,6 @@ INVALID_MAPS=(
 	map_unclosed_north.cub
 	map_unclosed_south.cub
 	map_unclosed_west.cub
-	error.cub
 )
 
 printf "env -i valgrind --leak-check=full ./cub3d maps/valid/map_north.cub\n"
