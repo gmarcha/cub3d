@@ -79,6 +79,9 @@ obj:
 			@mkdir -p obj/ray
 			@mkdir -p obj/utils
 
+test:		all
+			@bash test/test_invalid.sh
+
 clean:
 			@make -s $@ -C libft
 			@rm -rf $(OBJ) obj
@@ -91,4 +94,4 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		all obj clean fclean re
+.PHONY:		all obj test clean fclean re
