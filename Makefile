@@ -83,6 +83,7 @@ test:		all
 			@bash test/test_invalid.sh
 
 clean:
+			@make -s $@ -C mlx
 			@make -s $@ -C libft
 			@rm -rf $(OBJ) obj
 			@echo "$@: object files removed"
