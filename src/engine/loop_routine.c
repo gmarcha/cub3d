@@ -15,7 +15,7 @@
 int	loop_routine(t_root *root)
 {
 	if (draw_core(root) == NULL)
-		return (0);
+		return (mlx_loop_end(root->mlx));
 	update(root);
 	return (1);
 }
