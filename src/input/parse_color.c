@@ -28,6 +28,8 @@ static void	*read_color(t_root *root, char **buf, int rgb[])
 			if (rgb[i] > 255)
 				return (destroy(root, 2, "Error\nValue is too high in color"));
 		}
+		while (**buf && **buf != '\n' && ft_isspace(**buf))
+			(*buf)++;
 		if (i < 2 && *(*buf)++ != ',')
 			return (destroy(root, 2, "Error\nInvalid separator in color"));
 		while (**buf && **buf != '\n' && ft_isspace(**buf))

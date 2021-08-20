@@ -15,6 +15,7 @@
 t_root	*parse_scene(char *buf)
 {
 	t_root			*root;
+	int				**tmp;
 
 	root = root_init();
 	if (root == 0)
@@ -29,9 +30,10 @@ t_root	*parse_scene(char *buf)
 	}
 	if (check_info(root) == 0)
 		return (0);
-	root->map = init_map(root, buf);
-	if (root->map == 0)
+	tmp = init_map(root, buf);
+	if (tmp == 0)
 		return (0);
+	root->map = tmp;
 	if (parse_map(root, buf) == 0)
 		return (0);
 	return (root);
