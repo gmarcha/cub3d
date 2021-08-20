@@ -12,6 +12,8 @@
 
 #include "cub3d.h"
 
+#include <stdio.h>
+
 static char	*join_buf(char *file, char *buf)
 {
 	char			*tmp;
@@ -56,6 +58,8 @@ static char	*read_file(int fd)
 	{
 		buf[ret] = 0;
 		i++;
+		printf("%d\n", ret);
+		printf("%s\n", buf);
 		if (handle_infinite_input(&file_content, buf, i) == NULL)
 			return (NULL);
 		ret = read(fd, buf, 4096);
