@@ -83,7 +83,7 @@ test:		all
 			@bash test/test_invalid.sh
 
 clean:
-			@test ! -z mlx/Makefile.gen || make -s $@ -C mlx
+			@[ ! -e mlx/Makefile.gen ] || make -s $@ -C mlx
 			@make -s $@ -C libft
 			@rm -rf $(OBJ) obj
 			@echo "$@: object files removed"
