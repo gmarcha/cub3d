@@ -21,7 +21,8 @@ static char	*join_buf(char *file, char *buf)
 	return (tmp);
 }
 
-static char	*handle_infinite_input(char **file_content, char buf[], size_t i, int ret)
+static char	*handle_infinite_input(char **file_content, char buf[], size_t i,
+	int ret)
 {
 	if (i > 100 || (i > 2 && ret == 6))
 	{
