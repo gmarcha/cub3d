@@ -23,7 +23,7 @@ static char	*join_buf(char *file, char *buf)
 
 static char	*handle_infinite_input(char **file_content, char buf[], size_t i)
 {
-	if (i > 1000)
+	if (i > 100)
 	{
 		free(*file_content);
 		return (destroy(0, 0, "Error\n/dev/random, "
