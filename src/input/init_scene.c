@@ -12,8 +12,6 @@
 
 #include "cub3d.h"
 
-#include <stdio.h>
-
 static char	*join_buf(char *file, char *buf)
 {
 	char			*tmp;
@@ -23,9 +21,9 @@ static char	*join_buf(char *file, char *buf)
 	return (tmp);
 }
 
-static char	*handle_infinite_input(char **file_content, char buf[], size_t i)
+static char	*handle_infinite_input(char **file_content, char buf[], size_t i, int ret)
 {
-	if (i > 100)
+	if (i > 100 || (i > 2 && ret == 6))
 	{
 		free(*file_content);
 		return (destroy(0, 0, "Error\n/dev/random, "
@@ -58,9 +56,7 @@ static char	*read_file(int fd)
 	{
 		buf[ret] = 0;
 		i++;
-		printf("%d\n", ret);
-		printf("%s\n", buf);
-		if (handle_infinite_input(&file_content, buf, i) == NULL)
+		if (handle_infinite_input(&file_content, buf, i, ret) == NULL)
 			return (NULL);
 		ret = read(fd, buf, 4096);
 	}
