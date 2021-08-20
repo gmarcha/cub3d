@@ -18,7 +18,6 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
-# include <stdio.h>
 # include <math.h>
 
 # include "mlx.h"
@@ -147,7 +146,6 @@ void				draw_env(t_root *r, t_ray *ray, int i);
 
 int					key_press(int keycode, t_root *root);
 int					key_release(int keycode, t_root *root);
-int					key_destroy(int keycode, t_root *root);
 void				move_up(t_root *root);
 void				move_down(t_root *root);
 void				move_left(t_root *root);
