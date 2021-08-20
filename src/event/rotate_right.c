@@ -6,7 +6,7 @@
 /*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:38:26 by user42            #+#    #+#             */
-/*   Updated: 2021/08/19 20:29:28 by gamarcha         ###   ########.fr       */
+/*   Updated: 2021/08/20 17:09:33 by gamarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ void	rotate_right(t_root *root)
 	tmp = root->plane_x;
 	root->plane_x = tmp * cos(ratio) - root->plane_y * sin(ratio);
 	root->plane_y = tmp * sin(ratio) + root->plane_y * cos(ratio);
-	if (root->velocity_right < 10)
+	if (root->velocity_right < VELOCITY)
 		root->velocity_right++;
 }

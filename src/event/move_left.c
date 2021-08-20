@@ -6,7 +6,7 @@
 /*   By: gamarcha <gamarcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 19:38:03 by user42            #+#    #+#             */
-/*   Updated: 2021/08/19 20:01:39 by gamarcha         ###   ########.fr       */
+/*   Updated: 2021/08/20 17:08:52 by gamarcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void	move_left(t_root *r)
 		if (r->map[(int)r->pos_x][(int)(r->pos_y - r->plane_y)] != 1)
 			r->pos_y -= r->plane_y * ratio;
 	}
-	if (r->speed_left < 100)
+	if (r->speed_left < SPEED)
 		r->speed_left++;
 }
