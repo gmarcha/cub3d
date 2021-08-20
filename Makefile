@@ -1,6 +1,6 @@
 NAME		=	cub3d
 LFT			=	libft/libft.a
-MLX			=	mlx/Makefile.gen
+MLX			=	mlx/libmlx.a
 CC			=	clang
 CFLAGS		=	-Wall -Wextra -Werror -O3
 INC			=	-I ./inc -I ./libft -I ./mlx
@@ -48,9 +48,9 @@ SRC			=	src/draw/draw_core.c \
 				src/cub3d.c
 CLR			=	"\\033[2K"
 
-all:		$(MLX) $(LFT) obj $(NAME)
+all:		obj $(NAME)
 
-$(NAME):	$(OBJ)
+$(NAME):	$(MLX) $(LFT) $(OBJ)
 			@echo "$(CLR)$(NAME): compilation done"
 			@echo "$(NAME): linking object files\r\c"
 			@$(CC) $(CFLAGS) -o $@ $^ $(LIB)
