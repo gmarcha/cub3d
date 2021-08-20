@@ -29,6 +29,8 @@
 
 # define MOV_SPEED		0.001
 # define ROT_SPEED		0.002
+# define SPEED			60
+# define VELOCITY		10
 
 # define NORTH			0
 # define SOUTH			2
